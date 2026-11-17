@@ -1,31 +1,32 @@
-# Analisi Matematica I — Appunti Universitari
+# Analisi Matematica I
 
-Raccolta di appunti di **Analisi Matematica I** per Ingegneria (A.A. 2026/2027), redatta in LaTeX con tema dark, dimostrazioni svolte passo-passo, grafici `pgfplots` ed esercizi risolti.
+Appunti di **Analisi Matematica I** (Ingegneria, A.A. 2026/2027) — teoria, dimostrazioni ed esercizi svolti in LaTeX (`XeLaTeX` / `pgfplots`, dark theme).
 
-**[Apri o scarica il PDF completo (`Analisi_Matematica_I.pdf`)](./Analisi%20I.pdf)**
+> [!IMPORTANT]
+> **PDF compilato:** [`Analisi I.pdf`](./Analisi%20I.pdf)  
+> **Autore:** Leonardo Campulla — Sapienza Università di Roma
 
----
+## Indice dei capitoli
 
-## Contenuti attuali
+> **Prefazione**  
+> Obiettivi, prerequisiti (numeri reali, successioni, serie, limiti e $o$-piccoli).
 
-- **Prefazione**
-- **Capitolo 1 — Calcolo Differenziale**
-  - Rapporto incrementale, definizione di derivata e caratterizzazione tramite $o$-piccolo
-  - Migliore approssimazione rettilinea e retta tangente
-  - Derivabilità agli estremi, continuità e controesempi
-  - Algebra delle derivate, regola della catena e funzioni trascendenti elementari
-  - Derivazione delle funzioni inverse, goniometriche inverse e potenza reale $x^\alpha$
-  - Teorema di Rolle (con analisi della necessità delle ipotesi) e Teorema di Lagrange
-  - Funzioni iperboliche e settore seno iperbolico (`settsinh`)
-  - Derivate successive, classi di regolarità $C^k$ e $C^\infty$, criterio del limite della derivata e studio di $x^\alpha \sin(1/x)$
+> **01. Calcolo Differenziale**
+> - `1.1` Rapporto incrementale e definizione di derivata
+> - `1.2` Caratterizzazione tramite $o$-piccolo e retta tangente
+> - `1.3` Derivabilità agli estremi, continuità e derivate fondamentali
+> - `1.4` Regole di derivazione e funzioni trascendenti elementari
+> - `1.5` Funzioni inverse e confronto fra infiniti
+> - `1.6` Goniometriche inverse e potenza reale $x^\alpha$
+> - `1.7` Punti critici e Teorema di Rolle
+> - `1.8` Teorema di Lagrange, funzioni a derivata nulla e funzioni iperboliche
+> - `1.9` Derivate iperboliche, `settsinh` ed esercizi sui valori assoluti
+> - `1.10` Derivate successive e criterio del limite della derivata
+> - `1.11` Classi di regolarità $C^k / C^\infty$ e controesempio $x^\alpha \sin(1/x)$
 
-*(In aggiornamento con i capitoli successivi del corso, tra cui le Equazioni Differenziali.)*
+> **02. Equazioni Differenziali** *(in preparazione)*
 
----
-
-## Compilazione
-
-Il sorgente utilizza `fontspec` e richiede **XeLaTeX** o **LuaLaTeX**:
+## Build
 
 ```bash
 xelatex main.tex
