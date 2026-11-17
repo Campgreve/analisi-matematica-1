@@ -1,0 +1,103 @@
+\usepackage[a4paper, margin=2cm, headheight=15pt]{geometry}
+\usepackage{fontspec}
+\usepackage[italian]{babel}
+\babelfont{rm}{Helvetica Neue}
+
+\usepackage{enumitem}
+\setlist[itemize]{label=-}
+\usepackage{amsmath, amssymb}
+\usepackage{xcolor}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+% Palette Dark Mode
+\definecolor{bgdark}{HTML}{18191C}
+\definecolor{fglight}{HTML}{E4E6EB}
+\definecolor{accentpurple}{HTML}{9D7CD8}
+\definecolor{accentcyan}{HTML}{7DCFFF}
+\definecolor{accentgreen}{HTML}{9ECE6A}
+\definecolor{boxbg}{HTML}{222429}
+
+\pagecolor{bgdark}
+\color{fglight}
+
+% Intestazione e piè di pagina
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\color{fglight!60}\leftmark}
+\fancyhead[R]{\footnotesize\color{accentcyan}Analisi Matematica I — Leonardo Campulla}
+\fancyfoot[C]{\footnotesize\color{fglight!60}— \thepage\ —}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{fglight!25}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrulewidth}{0pt}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[C]{\footnotesize\color{fglight!60}— \thepage\ —}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+% Box minimalisti in stile dark (con testo chiaro e intestazione pulita)
+\newtcolorbox{defbox}[1][]{
+  colback=boxbg,
+  colframe=accentcyan,
+  coltext=fglight,
+  colbacktitle=boxbg,
+  coltitle=accentcyan,
+  fonttitle=\bfseries,
+  boxrule=0pt,
+  leftrule=2.5pt,
+  arc=0pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  title=#1
+}
+
+\newtcolorbox{propbox}[1][]{
+  colback=boxbg,
+  colframe=accentpurple,
+  coltext=fglight,
+  colbacktitle=boxbg,
+  coltitle=accentpurple,
+  fonttitle=\bfseries,
+  boxrule=0pt,
+  leftrule=2.5pt,
+  arc=0pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  title=#1
+}
+
+\newtcolorbox{esbox}[1][]{
+  colback=boxbg,
+  colframe=accentgreen,
+  coltext=fglight,
+  colbacktitle=boxbg,
+  coltitle=accentgreen,
+  fonttitle=\bfseries,
+  boxrule=0pt,
+  leftrule=2.5pt,
+  arc=0pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  title=#1,
+  breakable
+}
+
+% Stile titoli capitolo e sezione
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{fglight}}
+  {\large\color{accentcyan}\MakeUppercase{\chaptertitlename}\ \thechapter}
+  {10pt}
+  {\Huge}[\vspace{6pt}{\color{fglight!30}\titlerule[0.5pt]}]
+
+\titleformat{\section}
+  {\large\bfseries\color{accentcyan}}
+  {\thesection}{0.8em}{}[\vspace{2pt}{\color{fglight!40}\titlerule[0.5pt]}]
+
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{accentpurple}}
+  {\thesubsection}{0.8em}{}
+
+% Hyperref (sempre per ultimo)
+\usepackage[colorlinks=true, linkcolor=accentcyan, urlcolor=accentpurple]{hyperref}

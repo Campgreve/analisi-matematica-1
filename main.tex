@@ -1,0 +1,55 @@
+\documentclass[a4paper, 10pt, openany]{book}
+\input{preambolo.tex}
+
+\begin{document}
+
+% --- COPERTINA ---
+\begin{titlepage}
+    \centering
+    \vspace*{3cm}
+    {\color{accentcyan}\small\MakeUppercase{Appunti Universitari $\cdot$ Ingegneria}}
+    \vspace{0.8cm}
+    {\color{fglight!30}\rule{\linewidth}{0.5pt}}
+    \vspace{0.8cm}
+    {\Huge\bfseries\color{fglight} Analisi Matematica I \par}
+    \vspace{0.4cm}
+    {\Large\color{accentpurple} Teoria, Dimostrazioni ed Esercizi Svolti \par}
+    \vspace{0.8cm}
+    {\color{fglight!30}\rule{\linewidth}{0.5pt}}
+    \vfill
+    {\large\bfseries\color{fglight} Leonardo Campulla \par}
+    \vspace{0.2cm}
+    {\small\color{fglight!60} Anno Accademico 2026/2027 $\cdot$ Novembre 2026 \par}
+    \vspace*{1cm}
+\end{titlepage}
+
+% --- INDICE ---
+\frontmatter
+% --- PREFAZIONE ---
+\frontmatter
+\chapter*{Prefazione}
+\addcontentsline{toc}{chapter}{Prefazione}
+
+Questi appunti nascono con l'idea di raccogliere e riorganizzare in modo chiaro, rigoroso e immediatamente consultabile gli argomenti del corso di \textbf{Analisi Matematica I} per Ingegneria, affiancando al rigore formale una spiegazione lineare che renda naturale il passaggio dall'intuizione geometrica alla dimostrazione analitica.
+
+Per affrontare la lettura con profitto non sono richieste conoscenze avanzate, ma è indispensabile aver già maturato una buona dimestichezza con i concetti fondamentali che precedono il calcolo infinitesimale: la struttura dei numeri reali, il comportamento delle successioni e delle serie numeriche, e soprattutto il calcolo dei limiti e il confronto asintotico tramite gli $o$-piccoli, strumenti che verranno richiamati continuamente lungo tutto il percorso.
+
+Ogni argomento è sviluppato intrecciando definizioni, enunciati completi di tutte le ipotesi, dimostrazioni svolte senza salti logici ed esercizi mirati — inclusi controesempi utili a capire cosa accade nei punti critici o quando viene a mancare una delle condizioni di un teorema. Questo primo capitolo è interamente dedicato al \textbf{Calcolo Differenziale} in una variabile, pensato come base diretta per lo studio successivo delle \textbf{Equazioni Differenziali}.
+
+\vspace{1cm}
+\begin{flushright}
+    \textit{Leonardo Campulla} \\
+    {\footnotesize\color{fglight!60} Roma, Novembre 2026}
+\end{flushright}
+\tableofcontents
+
+% --- CAPITOLI ---
+\mainmatter
+\chapter{Calcolo Differenziale}
+\input{capitoli/01_calcolo_differenziale.tex}
+
+% Quando aggiungerai le equazioni differenziali, togli i "%" dalle due righe qui sotto:
+% \chapter{Equazioni Differenziali}
+% \input{capitoli/02_eq_differenziali.tex}
+
+\end{document}

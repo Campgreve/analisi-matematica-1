@@ -1,0 +1,1952 @@
+\section{Calcolo Differenziale: Rapporto Incrementale e Derivata}
+
+Sia $f : ]a, b[ \to \mathbb{R}$ e sia $x_0 \in ]a, b[$. Consideriamo il grafico di $f$:
+\[
+G = \left\{ (x, y) \in \mathbb{R}^2 : x \in ]a, b[ \text{ e } y = f(x) \right\}
+\]
+dove chiaramente il punto $(x_0, f(x_0)) \in G$. L'obiettivo è dare un significato preciso al concetto intuitivo di retta tangente a $G$ nel punto $(x_0, f(x_0))$.
+
+\subsection{Retta secante e rapporto incrementale}
+
+Sia $h \in \mathbb{R}$, con $h \neq 0$, tale che $x_0 + h \in ]a, b[$. Consideriamo due punti sul grafico $G$:
+\[
+P = (x_0, f(x_0)), \qquad Q = (x_0 + h, f(x_0 + h))
+\]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.82\textwidth,
+    height=5.2cm,
+    axis lines=middle,
+    axis line style={fglight!60},
+    xtick={1, 3},
+    xticklabels={$x_0$, $x_0 + h$},
+    ytick={0.7, 2.3},
+    yticklabels={$f(x_0)$, $f(x_0 + h)$},
+    tick label style={font=\footnotesize, color=fglight!80},
+    domain=0.2:3.7,
+    samples=100,
+    ymin=0, ymax=3.2,
+    xmin=-0.2, xmax=4.0,
+    grid=major,
+    grid style={dashed, fglight!15},
+    clip=false
+]
+\addplot [thick, color=accentcyan] {0.2*x^2 + 0.5};
+\addplot [thick, color=accentpurple, domain=0.3:3.5] {0.8*(x - 1) + 0.7};
+\draw[dashed, fglight!40] (axis cs:1,0) -- (axis cs:1,0.7) -- (axis cs:0,0.7);
+\draw[dashed, fglight!40] (axis cs:3,0) -- (axis cs:3,2.3) -- (axis cs:0,2.3);
+\fill[accentcyan] (axis cs:1,0.7) circle (2.2pt) node[below right, font=\footnotesize, color=fglight] {$P$};
+\fill[accentcyan] (axis cs:3,2.3) circle (2.2pt) node[above left, font=\footnotesize, color=fglight] {$Q$};
+\draw[->, thick, color=fglight!75] (axis cs:2.9, -0.45) -- (axis cs:1.2, -0.45) node[midway, below, font=\footnotesize] {$h \to 0$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+La retta congiungente $P$ e $Q$ ha equazione:
+\[
+\frac{y - f(x_0)}{f(x_0 + h) - f(x_0)} = \frac{x - x_0}{x_0 + h - x_0}
+\]
+da cui, esplicitando rispetto a $y$, si ottiene:
+\[
+y = f(x_0) + \frac{f(x_0 + h) - f(x_0)}{h} (x - x_0)
+\]
+Il coefficiente angolare di tale retta è dato dal \textbf{rapporto incrementale} di $f$ in $x_0$:
+\[
+\frac{f(x_0 + h) - f(x_0)}{h}
+\]
+
+\subsection{Definizione di derivata}
+
+\begin{defbox}[Definizione — Derivabilità e Derivata]
+Siano $f : ]a, b[ \to \mathbb{R}$ e $x_0 \in ]a, b[$. Si dice che $f$ è \textbf{derivabile} in $x_0$ se esiste finito il seguente limite:
+\[
+\lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h}
+\]
+Tale limite si chiama \textbf{derivata} di $f$ in $x_0$ e si denota con:
+\[
+f'(x_0) = D f(x_0) = \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h}
+\]
+\end{defbox}
+
+\paragraph{Osservazione.} Se $f$ è derivabile in $x_0$, si ha anche l'espressione equivalente:
+\[
+f'(x_0) = \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0}
+\]
+\textit{Infatti:} partendo da $f'(x_0) = \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h}$, poniamo $x = x_0 + h$ (ossia $h = x - x_0$). Per $h \to 0$ si ha $x = x_0 + h \to x_0$, per cui:
+\[
+f'(x_0) = \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0}
+\]
+e vale il viceversa.
+
+\section{Caratterizzazione della Derivabilità e Retta Tangente}
+
+\begin{propbox}[Teorema — Caratterizzazione tramite $o$-piccolo]
+Sia $f : ]a, b[ \to \mathbb{R}$ e sia $x_0 \in ]a, b[$. Le seguenti condizioni sono equivalenti:
+\begin{itemize}
+    \item[(a)] $f$ è derivabile in $x_0$;
+    \item[(b)] $\exists L \in \mathbb{R}$ tale che
+    \[
+    f(x_0 + h) = \underbrace{f(x_0) + Lh}_{\text{approssimazione}} + \underbrace{o(h)}_{\text{errore}} \quad \text{per } h \to 0
+    \]
+\end{itemize}
+Inoltre, vere (a) o (b), si ha $L = f'(x_0)$.
+\end{propbox}
+
+\paragraph{Dimostrazione $(a) \Rightarrow (b)$.}
+Per ipotesi $f$ è derivabile in $x_0$, quindi:
+\[
+\lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h} = f'(x_0)
+\]
+Per $h \neq 0$, questo equivale a scrivere:
+\[
+\frac{f(x_0 + h) - f(x_0)}{h} = f'(x_0) + o(1) \quad \text{per } h \to 0
+\]
+Moltiplicando entrambi i membri per $h$:
+\[
+f(x_0 + h) - f(x_0) = f'(x_0)h + h \, o(1)
+\]
+Poiché $h \, o(1) = o(h)$ per $h \to 0$, si ottiene:
+\[
+f(x_0 + h) = f(x_0) + f'(x_0)h + o(h) \quad \text{per } h \to 0
+\]
+cioè la condizione (b) è vera con $L = f'(x_0)$.
+
+\paragraph{Dimostrazione $(b) \Rightarrow (a)$.}
+Per ipotesi $\exists L \in \mathbb{R}$ tale che $f(x_0 + h) = f(x_0) + Lh + o(h)$ per $h \to 0$. Isolando il rapporto incrementale (per $h \neq 0$):
+\[
+\frac{f(x_0 + h) - f(x_0)}{h} = L + \frac{o(h)}{h}
+\]
+Passando al limite per $h \to 0$, poiché $\frac{o(h)}{h} \to 0$, il secondo membro tende a $L \in \mathbb{R}$. Pertanto $f$ è derivabile in $x_0$ e si ha:
+\[
+f'(x_0) = L
+\]
+
+\subsection{Migliore approssimazione rettilinea}
+
+Se $f$ è derivabile in $x_0$, allora ponendo $h = x - x_0$ nella caratterizzazione precedente si ha:
+\[
+f(x) = \underbrace{f(x_0) + f'(x_0)(x - x_0)}_{g(x)} + o(x - x_0) \quad \text{dove } \frac{o(x - x_0)}{x - x_0} \xrightarrow{x \to x_0} 0
+\]
+La funzione $g(x) = f(x_0) + f'(x_0)(x - x_0)$ è una \textbf{funzione affine} il cui grafico è la retta di equazione $y = f(x_0) + f'(x_0)(x - x_0)$.
+
+\begin{defbox}[Definizione — Retta Tangente]
+Si dice \textbf{retta tangente} al grafico di $f$ nel punto $(x_0, f(x_0))$ la retta di equazione:
+\[
+y = f(x_0) + f'(x_0)(x - x_0)
+\]
+\end{defbox}
+
+Sia ora $m \in \mathbb{R}$ e consideriamo una generica retta non verticale passante per $(x_0, f(x_0))$, descritta dalla funzione affine $g_m(x) = f(x_0) + m(x - x_0)$. Vogliamo che lo scarto tra $f(x)$ e $g_m(x)$ sia trascurabile rispetto a $(x - x_0)$ vicino a $x_0$, ovvero:
+\[
+f(x) - g_m(x) = o(x - x_0) \quad \text{per } x \to x_0 \iff m = f'(x_0)
+\]
+\textit{Infatti}, calcolando il limite del rapporto:
+\[
+\frac{f(x) - g_m(x)}{x - x_0} = \frac{f(x) - f(x_0) - m(x - x_0)}{x - x_0} = \frac{f(x) - f(x_0)}{x - x_0} - m \xrightarrow{x \to x_0} f'(x_0) - m
+\]
+Tale limite è uguale a $0$ se e solo se $m = f'(x_0)$. Per questo motivo, la retta tangente (corrispondente a $m = f'(x_0)$) è detta la \textbf{migliore approssimazione rettilinea} di $f$ in $x_0$.
+
+\section{Derivabilità agli estremi, Continuità e Derivate Fondamentali}
+
+In questa sezione estendiamo la nozione di derivabilità ai punti di frontiera di un intervallo chiuso e limitato $[a,b]$, analizziamo il legame fondamentale tra derivabilità e continuità e calcoliamo le prime derivate elementari tramite la definizione.
+
+\subsection{Derivabilità agli estremi di un intervallo chiuso}
+
+Quando una funzione è definita su un intervallo chiuso $[a,b]$, negli estremi $a$ e $b$ è possibile incrementare la variabile indipendente soltanto da un lato (verso destra in $a$ e verso sinistra in $b$). La definizione di derivata si adatta quindi utilizzando i rispettivi limiti unilaterali del rapporto incrementale.
+
+\begin{defbox}[{Definizione — Derivabilità negli estremi di $[a,b]$}]
+Sia $f \colon [a,b] \to \mathbb{R}$.
+\begin{itemize}
+    \item Si dice che $f$ è \textbf{derivabile in $a$} (o derivabile da destra in $a$) se esiste finito il limite destro del rapporto incrementale:
+    \[
+        f'_{+}(a) = \lim_{h \to 0^+} \frac{f(a+h) - f(a)}{h} = \lim_{x \to a^+} \frac{f(x) - f(a)}{x - a}.
+    \]
+    \item Si dice che $f$ è \textbf{derivabile in $b$} (o derivabile da sinistra in $b$) se esiste finito il limite sinistro del rapporto incrementale:
+    \[
+        f'_{-}(b) = \lim_{h \to 0^-} \frac{f(b+h) - f(b)}{h} = \lim_{x \to b^-} \frac{f(x) - f(b)}{x - b}.
+    \]
+\end{itemize}
+\end{defbox}
+
+\subsection{Relazione tra derivabilità e continuità}
+
+La condizione di derivabilità in un punto è più forte della semplice continuità: l'esistenza della retta tangente garantisce che il grafico non presenti salti o interruzioni nel punto considerato.
+
+\begin{propbox}[Teorema — La derivabilità implica la continuità]
+Sia $f \colon I \to \mathbb{R}$ e sia $x_0 \in I$. Se $f$ è derivabile in $x_0$, allora $f$ è continua in $x_0$.
+\end{propbox}
+
+\noindent\textbf{Dimostrazione.} Poiché per ipotesi $f$ è derivabile in $x_0$, possiamo avvalerci della caratterizzazione locale tramite gli o-piccoli:
+\[
+    f(x) = f(x_0) + f'(x_0)(x - x_0) + o(x - x_0) \quad \text{per } x \to x_0.
+\]
+Passando al limite per $x \to x_0$, osserviamo che il termine lineare $f'(x_0)(x - x_0) \to 0$ e, per definizione di o-piccolo, anche $o(x - x_0) \to 0$. Pertanto:
+\[
+    f(x) = f(x_0) + o(1) \quad \text{per } x \to x_0 \iff \lim_{x \to x_0} f(x) = f(x_0),
+\]
+il che equivale esattamente alla definizione di continuità di $f$ in $x_0$. $\blacksquare$
+
+\vspace{0.3cm}
+\noindent\textbf{Attenzione: il viceversa è falso.} Una funzione può essere continua in un punto $x_0$ senza essere ivi derivabile. Il controesempio classico è fornito dalla funzione valore assoluto nell'origine.
+
+\begin{esbox}[Controesempio — La funzione valore assoluto $f(x) = |x|$]
+Consideriamo la funzione $f \colon \mathbb{R} \to \mathbb{R}$ definita a tratti da:
+\[
+    f(x) = |x| = \begin{cases} x & \text{se } x \ge 0, \\ -x & \text{se } x < 0. \end{cases}
+\]
+Studiamone la derivabilità nei tre casi $x_0 > 0$, $x_0 < 0$ e $x_0 = 0$:
+
+\begin{enumerate}
+    \item \textbf{Caso $x_0 > 0$:} Per $x$ sufficientemente vicino a $x_0$ (e $x \neq x_0$), si ha $x > 0$, dunque $f(x) = x$. Il rapporto incrementale vale:
+    \[
+        \frac{f(x) - f(x_0)}{x - x_0} = \frac{x - x_0}{x - x_0} = 1 \implies f'(x_0) = 1 \quad \forall x_0 > 0.
+    \]
+    \item \textbf{Caso $x_0 < 0$:} Per $x$ sufficientemente vicino a $x_0$ (e $x \neq x_0$), si ha $x < 0$, dunque $f(x) = -x$. Il rapporto incrementale vale:
+    \[
+        \frac{f(x) - f(x_0)}{x - x_0} = \frac{-x - (-x_0)}{x - x_0} = -\frac{x - x_0}{x - x_0} = -1 \implies f'(x_0) = -1 \quad \forall x_0 < 0.
+    \]
+    \item \textbf{Caso $x_0 = 0$ (punto angoloso):} La funzione è continua in $x_0 = 0$ poiché $\lim_{x \to 0} |x| = 0 = f(0)$. Tuttavia, calcolando i limiti destro e sinistro del rapporto incrementale in $0$ per $x \neq 0$:
+    \begin{align*}
+        \lim_{x \to 0^+} \frac{|x| - 0}{x - 0} &= \lim_{x \to 0^+} \frac{x}{x} = 1, \\
+        \lim_{x \to 0^-} \frac{|x| - 0}{x - 0} &= \lim_{x \to 0^-} \frac{-x}{x} = -1.
+    \end{align*}
+    Poiché il limite destro e il limite sinistro sono finiti ma diversi tra loro, non esiste $\lim_{x \to 0} \frac{|x|}{x}$. Di conseguenza, $f(x) = |x|$ è continua in $0$ ma \textbf{non è derivabile in $0$}.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.75\textwidth,
+    height=4.8cm,
+    axis lines=middle,
+    axis line style={fglight!60, -stealth},
+    tick label style={font=\footnotesize, color=fglight!70},
+    xlabel={$x$}, ylabel={$y$},
+    xlabel style={at={(ticklabel* cs:1)}, anchor=west, color=fglight!80},
+    ylabel style={at={(ticklabel* cs:1)}, anchor=south, color=fglight!80},
+    xmin=-3.2, xmax=3.2,
+    ymin=-0.5, ymax=3.2,
+    xtick={-2, -1, 1, 2},
+    ytick={1, 2, 3},
+    grid=major,
+    grid style={dashed, fglight!15}
+]
+% Grafico di |x|
+\addplot[very thick, color=accentcyan, domain=-3:0] {-x};
+\addplot[very thick, color=accentcyan, domain=0:3] {x} node[pos=0.82, anchor=south east, font=\small] {$f(x)=|x|$};
+
+% Punto angoloso nell'origine
+\addplot[only marks, mark=*, mark size=2.2pt, color=accentpurple] coordinates {(0,0)};
+\node[below right, font=\footnotesize, color=accentpurple] at (axis cs:0.05,-0.02) {Punto angoloso $(0,0)$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\end{esbox}
+
+\subsection{Calcolo delle derivate di funzioni elementari}
+
+Applichiamo ora direttamente la definizione di derivata per ricavare le regole di derivazione delle funzioni costanti, lineari e delle potenze naturali.
+
+\begin{propbox}[Proposizione — Derivate delle funzioni potenza $x^n$]
+Per ogni $x \in \mathbb{R}$, valgono le seguenti formule di derivazione:
+\begin{enumerate}
+    \item \textbf{Funzione costante:} $D(c) = 0$ per ogni $c \in \mathbb{R}$.
+    \item \textbf{Funzione identità:} $D(x) = 1$.
+    \item \textbf{Funzione quadratica:} $D(x^2) = 2x$.
+    \item \textbf{Potenza $n$-esima:} $D(x^n) = n x^{n-1}$ per ogni $n \in \mathbb{N}$ con $n \ge 1$.
+\end{enumerate}
+\end{propbox}
+
+\noindent\textbf{Dimostrazione.} Fissato un generico punto $x_0 \in \mathbb{R}$ e scelto $x \in \mathbb{R}$ con $x \neq x_0$:
+
+\begin{itemize}
+    \item \textbf{Caso 1 ($f(x) = c$):} Il rapporto incrementale è identicamente nullo:
+    \[
+        \frac{f(x) - f(x_0)}{x - x_0} = \frac{c - c}{x - x_0} = 0 \implies f'(x_0) = \lim_{x \to x_0} 0 = 0 \quad \forall x_0 \in \mathbb{R}.
+    \]
+
+    \item \textbf{Caso 2 ($f(x) = x$):} Il rapporto incrementale vale costantemente $1$:
+    \[
+        \frac{f(x) - f(x_0)}{x - x_0} = \frac{x - x_0}{x - x_0} = 1 \implies f'(x_0) = \lim_{x \to x_0} 1 = 1 \quad \forall x_0 \in \mathbb{R}.
+    \]
+
+    \item \textbf{Caso 3 ($f(x) = x^2$):} Scomponendo la differenza di quadrati si ottiene:
+    \[
+        \frac{x^2 - x_0^2}{x - x_0} = \frac{(x - x_0)(x + x_0)}{x - x_0} = x + x_0 \xrightarrow{x \to x_0} 2x_0 \implies D(x^2) = 2x \quad \forall x \in \mathbb{R}.
+    \]
+
+    \item \textbf{Caso 4 ($f(x) = x^n$ con $n \ge 2$):} Per scomporre la differenza di potenze $n$-esime utilizziamo la seguente identità algebrica, valida per ogni $n \in \mathbb{N}$ con $n \ge 2$:
+    \[
+        x^n - x_0^n = (x - x_0) \sum_{k=0}^{n-1} x^{n-1-k} x_0^k.
+    \]
+    \emph{(Nota: per $n=2$, la formula restituisce proprio $(x-x_0)(x^1 x_0^0 + x^0 x_0^1) = (x-x_0)(x+x_0)$).}
+
+    Dimostriamo innanzitutto la validità di tale identità per \textbf{induzione matematica} su $n \ge 2$:
+    \begin{itemize}
+        \item \emph{Base dell'induzione ($n=2$):} già verificata sopra.
+        \item \emph{Passo induttivo:} Supponiamo l'identità vera per un certo $n \ge 2$ e dimostriamola per $n+1$, ovvero vogliamo provare che:
+        \[
+            x^{n+1} - x_0^{n+1} = (x - x_0) \sum_{k=0}^{n} x^{n-k} x_0^k.
+        \]
+        Sottraendo e sommando il termine $x_0 x^n$, raccogliamo a fattor comune e applichiamo l'ipotesi induttiva:
+        \begin{align*}
+            x^{n+1} - x_0^{n+1} &= x^{n+1} - x_0 x^n + x_0 x^n - x_0^{n+1} \\
+            &= x^n(x - x_0) + x_0(x^n - x_0^n) \\
+            &= x^n(x - x_0) + x_0 (x - x_0) \sum_{k=0}^{n-1} x^{n-1-k} x_0^k \\
+            &= (x - x_0) \left[ x^n + \sum_{k=0}^{n-1} x^{n-1-k} x_0^{k+1} \right].
+        \end{align*}
+        Effettuando nella sommatoria il cambio d'indice $h = k + 1$ (per cui quando $k=0$ si ha $h=1$, e quando $k=n-1$ si ha $h=n$), riscriviamo l'espressione tra parentesi quadre come:
+        \[
+            x^{n+1} - x_0^{n+1} = (x - x_0) \left[ x^n + \sum_{h=1}^{n} x^{n-h} x_0^h \right] = (x - x_0) \sum_{h=0}^{n} x^{n-h} x_0^h,
+        \]
+        poiché il termine per $h=0$ della sommatoria è proprio $x^{n-0} x_0^0 = x^n$. Ciò completa la dimostrazione per induzione.
+    \end{itemize}
+
+    Possiamo ora calcolare il limite del rapporto incrementale per $f(x) = x^n$ semplificando il fattore $(x - x_0)$ per $x \neq x_0$:
+    \[
+        \frac{x^n - x_0^n}{x - x_0} = \frac{(x - x_0) \displaystyle\sum_{k=0}^{n-1} x^{n-1-k} x_0^k}{x - x_0} = \sum_{k=0}^{n-1} x^{n-1-k} x_0^k.
+    \]
+    Passando al limite per $x \to x_0$, ciascuno degli $n$ addendi della sommatoria tende a $x_0^{n-1-k} x_0^k = x_0^{n-1}$:
+    \[
+        \lim_{x \to x_0} \frac{x^n - x_0^n}{x - x_0} = \sum_{k=0}^{n-1} x_0^{n-1-k} x_0^k = \sum_{k=0}^{n-1} x_0^{n-1} = n x_0^{n-1}.
+    \]
+    Pertanto $f$ è derivabile su tutto $\mathbb{R}$ e risulta $D(x^n) = n x^{n-1}$. $\blacksquare$
+\end{itemize}
+
+\begin{esbox}[Esercizio svolto — Studio di derivabilità e retta tangente]
+Data la funzione $f(x) = x^4 - 3x^2 + 5$, calcolare la sua derivata nel punto $x_0 = -1$ e determinare l'equazione della retta tangente al grafico di $f$ in $(-1, f(-1))$.
+
+\medskip
+\noindent\textbf{Svolgimento.}
+Utilizzando la linearità della derivata e le regole di derivazione delle potenze appena dimostrate ($D(x^4) = 4x^3$, $D(x^2) = 2x$, $D(5) = 0$), la funzione derivata prima è:
+\[
+    f'(x) = 4x^3 - 3(2x) + 0 = 4x^3 - 6x.
+\]
+Valutiamo ora sia la funzione sia la sua derivata nel punto $x_0 = -1$:
+\begin{align*}
+    f(-1) &= (-1)^4 - 3(-1)^2 + 5 = 1 - 3 + 5 = 3, \\
+    f'(-1) &= 4(-1)^3 - 6(-1) = -4 + 6 = 2.
+\end{align*}
+La retta tangente al grafico di $f$ nel punto $P = (-1, 3)$ ha equazione $y = f(x_0) + f'(x_0)(x - x_0)$, dunque:
+\[
+    y = 3 + 2(x - (-1)) \implies y = 2x + 5.
+\]
+\end{esbox}
+
+\begin{esbox}[Esercizio svolto — Analisi di continuità e derivabilità di una funzione a tratti]
+Stabilire per quali valori dei parametri reali $a, b \in \mathbb{R}$ la seguente funzione è derivabile su tutto $\mathbb{R}$:
+\[
+    f(x) = \begin{cases} x^3 + ax & \text{se } x \le 1, \\ bx^2 + 2 & \text{se } x > 1. \end{cases}
+\]
+
+\medskip
+\noindent\textbf{Svolgimento.}
+Per $x < 1$ e per $x > 1$ la funzione coincide con polinomi, pertanto è sicuramente continua e derivabile. Resta da imporre la derivabilità nel punto di raccordo $x_0 = 1$.
+
+\begin{enumerate}
+    \item \textbf{Condizione necessaria (Continuità in $x_0 = 1$):} Affinché $f$ possa essere derivabile in $1$, deve anzitutto essere continua in $1$, ossia $\lim_{x \to 1^-} f(x) = \lim_{x \to 1^+} f(x) = f(1)$:
+    \[
+        1^3 + a(1) = b(1)^2 + 2 \implies 1 + a = b + 2 \implies a = b + 1.
+    \]
+
+    \item \textbf{Uguaglianza delle derivate destra e sinistra in $x_0 = 1$:} Calcoliamo i limiti sinistro e destro del rapporto incrementale (o, equivalentemente, i limiti delle derivate dei due rami polinomiali):
+    \begin{align*}
+        f'_{-}(1) &= \lim_{x \to 1^-} \frac{(x^3 + ax) - (1 + a)}{x - 1} = \left. (3x^2 + a) \right|_{x=1} = 3 + a, \\
+        f'_{+}(1) &= \lim_{x \to 1^+} \frac{(bx^2 + 2) - (b + 2)}{x - 1} = \left. (2bx) \right|_{x=1} = 2b.
+    \end{align*}
+    Imponendo $f'_{-}(1) = f'_{+}(1)$ otteniamo la seconda equazione:
+    \[
+        3 + a = 2b.
+    \]
+\end{enumerate}
+Mettendo a sistema le due condizioni ricavate:
+\[
+    \begin{cases} a = b + 1 \\ 3 + a = 2b \end{cases} \implies 3 + (b + 1) = 2b \implies b = 4, \quad a = 5.
+\]
+Pertanto, $f$ è derivabile su tutto $\mathbb{R}$ se e solo se $a = 5$ e $b = 4$.
+\end{esbox}
+
+\section{Regole di Derivazione e Funzioni Trascendenti Elementari}
+
+Dopo aver stabilito le derivate delle potenze naturali, analizziamo le regole algebriche di derivazione (linearità, prodotto, reciproco e quoziente), il teorema di derivazione delle funzioni composte e il calcolo delle derivate delle principali funzioni trascendenti, quali l'esponenziale e il seno.
+
+\subsection{Algebra delle derivate: linearità, prodotto e quoziente}
+
+L'operazione di derivazione si comporta in modo regolare rispetto alle operazioni algebriche elementari tra funzioni.
+
+\begin{propbox}[Proposizione — Linearità della derivata]
+Siano $f, g$ due funzioni derivabili in un punto $x \in \mathbb{R}$ e siano $\lambda, \mu \in \mathbb{R}$ due scalari reali. Allora la combinazione lineare $\lambda f + \mu g$ è derivabile in $x$ e risulta:
+\[
+    (\lambda f + \mu g)'(x) = \lambda f'(x) + \mu g'(x).
+\]
+In particolare, ogni polinomio di grado $N$:
+\[
+    P(x) = a_0 + a_1 x + a_2 x^2 + \dots + a_N x^N = \sum_{k=0}^{N} a_k x^k \quad (a_0, \dots, a_N \in \mathbb{R}, \, a_N \neq 0)
+\]
+è derivabile su tutto $\mathbb{R}$ con derivata:
+\[
+    P'(x) = \sum_{k=1}^{N} k a_k x^{k-1} \quad \forall x \in \mathbb{R}.
+\]
+\end{propbox}
+
+Per quanto riguarda il prodotto di due funzioni derivabili, la derivata non coincide con il prodotto delle derivate, ma segue la nota regola di Leibniz.
+
+\begin{propbox}[Proposizione — Derivata del prodotto]
+Siano $f$ e $g$ derivabili in $x_0$. Allora la funzione prodotto $f \cdot g$ è derivabile in $x_0$ e si ha:
+\[
+    (fg)'(x_0) = f'(x_0)g(x_0) + f(x_0)g'(x_0).
+\]
+\end{propbox}
+
+\noindent\textbf{Dimostrazione.} Per $x \neq x_0$, scriviamo il rapporto incrementale del prodotto $fg$ in $x_0$, sommando e sottraendo al numeratore il termine $f(x_0)g(x)$:
+\begin{align*}
+    \frac{(fg)(x) - (fg)(x_0)}{x - x_0} &= \frac{f(x)g(x) - f(x_0)g(x) + f(x_0)g(x) - f(x_0)g(x_0)}{x - x_0} \\
+    &= g(x)\,\frac{f(x) - f(x_0)}{x - x_0} + f(x_0)\,\frac{g(x) - g(x_0)}{x - x_0}.
+\end{align*}
+Passando al limite per $x \to x_0$, poiché $g$ è derivabile in $x_0$, essa è anche ivi continua, dunque $g(x) \to g(x_0)$. I due rapporti incrementali tendono rispettivamente a $f'(x_0)$ e $g'(x_0)$, per cui:
+\[
+    \lim_{x \to x_0} \frac{(fg)(x) - (fg)(x_0)}{x - x_0} = g(x_0)f'(x_0) + f(x_0)g'(x_0). \quad \blacksquare
+\]
+
+\begin{esbox}[Esercizio svolto — Derivata nell'origine di una funzione pari]
+Dimostrare che se $f \colon \mathbb{R} \to \mathbb{R}$ è una funzione pari e derivabile in $x_0 = 0$, allora $f'(0) = 0$.
+
+\medskip
+\noindent\textbf{Svolgimento.}
+Per ipotesi $f$ è pari, ossia $f(-x) = f(x)$ per ogni $x \in \mathbb{R}$, ed è derivabile in $0$. Scriviamo il limite del rapporto incrementale in $0$ e sfruttiamo la parità della funzione:
+\[
+    f'(0) = \lim_{x \to 0} \frac{f(x) - f(0)}{x} = \lim_{x \to 0} \frac{f(-x) - f(0)}{x}.
+\]
+Effettuando il cambio di variabile $y = -x$ (per cui $y \to 0$ quando $x \to 0$ e $x = -y$), otteniamo:
+\[
+    f'(0) = \lim_{y \to 0} \frac{f(y) - f(0)}{-y} = -\lim_{y \to 0} \frac{f(y) - f(0)}{y} = -f'(0).
+\]
+Dall'uguaglianza $f'(0) = -f'(0)$ segue $2f'(0) = 0$, e dunque $f'(0) = 0$.
+\end{esbox}
+
+Passiamo ora alle regole di derivazione del reciproco e del quoziente di due funzioni.
+
+\begin{propbox}[Proposizione — Derivata del reciproco e del quoziente]
+Siano $f$ e $g$ due funzioni derivabili in $x_0$ con $g(x_0) \neq 0$. Allora:
+\begin{enumerate}
+    \item La funzione reciproca $\dfrac{1}{g}$ è derivabile in $x_0$ e risulta:
+    \[
+        \left(\frac{1}{g}\right)'(x_0) = -\frac{g'(x_0)}{\bigl(g(x_0)\bigr)^2}.
+    \]
+    \item La funzione quoziente $\dfrac{f}{g}$ è derivabile in $x_0$ e risulta:
+    \[
+        \left(\frac{f}{g}\right)'(x_0) = \frac{f'(x_0)g(x_0) - f(x_0)g'(x_0)}{\bigl(g(x_0)\bigr)^2}.
+    \]
+\end{enumerate}
+\end{propbox}
+
+\noindent\textbf{Dimostrazione.}
+\begin{enumerate}
+    \item Poiché $g$ è derivabile in $x_0$, è ivi continua; essendo $g(x_0) \neq 0$, per il \emph{teorema della permanenza del segno} esiste un raggio $r > 0$ tale che $g(x) \neq 0$ per ogni $x \in \,]x_0 - r, x_0 + r[$. La funzione $\frac{1}{g}$ è pertanto ben definita in tale intorno. Per $x \in \,]x_0 - r, x_0 + r[$ con $x \neq x_0$, calcoliamo il rapporto incrementale:
+    \[
+        \frac{\dfrac{1}{g(x)} - \dfrac{1}{g(x_0)}}{x - x_0} = \frac{g(x_0) - g(x)}{g(x_0)g(x)(x - x_0)} = -\frac{g(x) - g(x_0)}{x - x_0} \cdot \frac{1}{g(x_0)g(x)}.
+    \]
+    Passando al limite per $x \to x_0$ e sfruttando la continuità di $g$ in $x_0$, otteniamo:
+    \[
+        \left(\frac{1}{g}\right)'(x_0) = -g'(x_0) \cdot \frac{1}{g(x_0)g(x_0)} = -\frac{g'(x_0)}{\bigl(g(x_0)\bigr)^2}.
+    \]
+
+    \item Scrivendo il quoziente come prodotto $\dfrac{f(x)}{g(x)} = f(x) \cdot \dfrac{1}{g(x)}$ e applicando la regola del prodotto insieme al punto precedente, si ha:
+    \begin{align*}
+        \left(\frac{f}{g}\right)'(x_0) &= f'(x_0)\,\frac{1}{g(x_0)} + f(x_0)\left(\frac{1}{g}\right)'(x_0) \\
+        &= \frac{f'(x_0)}{g(x_0)} + f(x_0)\left[-\frac{g'(x_0)}{\bigl(g(x_0)\bigr)^2}\right] = \frac{f'(x_0)g(x_0) - f(x_0)g'(x_0)}{\bigl(g(x_0)\bigr)^2}. \quad \blacksquare
+    \end{align*}
+\end{enumerate}
+
+\begin{esbox}[Esercizio svolto — Applicazione della regola del quoziente]
+Calcolare la derivata prima della funzione razionale:
+\[
+    h(x) = \frac{2x^3 - 1}{x^2 + 4}.
+\]
+
+\medskip
+\noindent\textbf{Svolgimento.}
+Il denominatore $g(x) = x^2 + 4$ è strettamente positivo su tutto $\mathbb{R}$, quindi $h$ è derivabile per ogni $x \in \mathbb{R}$. Posto $f(x) = 2x^3 - 1$ (con $f'(x) = 6x^2$) e $g(x) = x^2 + 4$ (con $g'(x) = 2x$), applichiamo la formula di derivazione del quoziente:
+\begin{align*}
+    h'(x) &= \frac{6x^2(x^2 + 4) - (2x^3 - 1)(2x)}{(x^2 + 4)^2} \\
+    &= \frac{6x^4 + 24x^2 - 4x^4 + 2x}{(x^2 + 4)^2} = \frac{2x^4 + 24x^2 + 2x}{(x^2 + 4)^2}.
+\end{align*}
+\end{esbox}
+
+\subsection{Derivazione delle funzioni composte (Regola della catena)}
+
+Il teorema seguente permette di calcolare la derivata della composizione di due funzioni derivabili.
+
+\begin{propbox}[Teorema — Derivata della funzione composta]
+Siano $f \colon \,]a,b[\, \to \mathbb{R}$ e $g \colon \,]c,d[\, \to \mathbb{R}$ due funzioni derivabili tali che $f\bigl(\,]a,b[\,\bigr) \subseteq \,]c,d[$, in modo che sia ben definita la funzione composta $g \circ f \colon \,]a,b[\, \to \mathbb{R}$. Allora $g \circ f$ è derivabile in ogni punto $x \in \,]a,b[$ e risulta:
+\[
+    (g \circ f)'(x) = g'\bigl(f(x)\bigr) \cdot f'(x).
+\]
+\end{propbox}
+
+\subsection{Derivate delle funzioni esponenziali e goniometriche}
+
+Calcoliamo infine tramite la definizione le derivate della funzione esponenziale $a^x$ e della funzione seno $\sin x$.
+
+\begin{propbox}[Proposizione — Derivata della funzione esponenziale e della funzione seno]
+Valgono le seguenti formule di derivazione su tutto $\mathbb{R}$:
+\begin{enumerate}
+    \item $D(a^x) = a^x \log a$ per ogni $a > 0$ (dove $\log$ indica il logaritmo naturale in base $e$). In particolare, per $a = e$:
+    \[
+        D(e^x) = e^x.
+    \]
+    \item $D(\sin x) = \cos x$ per ogni $x \in \mathbb{R}$.
+\end{enumerate}
+\end{propbox}
+
+\noindent\textbf{Dimostrazione.}
+\begin{enumerate}
+    \item Fissati $a > 0$, $x \in \mathbb{R}$ e un incremento $h \neq 0$, scriviamo il rapporto incrementale di $f(x) = a^x$:
+    \[
+        \frac{a^{x+h} - a^x}{h} = a^x \, \frac{a^h - 1}{h}.
+    \]
+    Ricordando il limite notevole $\lim_{h \to 0} \frac{a^h - 1}{h} = \log a$, passando al limite per $h \to 0$ si ottiene subito:
+    \[
+        \lim_{h \to 0} \frac{a^{x+h} - a^x}{h} = a^x \log a.
+    \]
+    Ponendo $a = e$, poiché $\log e = 1$, segue direttamente $D(e^x) = e^x$.
+
+    \item Fissati $x \in \mathbb{R}$ e $h \neq 0$, applichiamo la formula di addizione $\sin(x + h) = \sin x \cos h + \cos x \sin h$ al rapporto incrementale di $f(x) = \sin x$:
+    \begin{align*}
+        \frac{\sin(x+h) - \sin x}{h} &= \frac{\sin x \cos h + \cos x \sin h - \sin x}{h} \\
+        &= \sin x \left(\frac{\cos h - 1}{h}\right) + \cos x \left(\frac{\sin h}{h}\right).
+    \end{align*}
+    Per $h \to 0$, dallo sviluppo asintotico $\cos h - 1 = -\frac{1}{2}h^2 + o(h^2)$ si deduce che $\cos h - 1 = o(h)$, e quindi:
+    \[
+        \frac{\cos h - 1}{h} = \frac{o(h)}{h} = o(1) \xrightarrow{h \to 0} 0,
+    \]
+    mentre dal limite notevole del seno si ha $\frac{\sin h}{h} \xrightarrow{h \to 0} 1$. Di conseguenza:
+    \[
+        \lim_{h \to 0} \frac{\sin(x+h) - \sin x}{h} = (\sin x) \cdot 0 + (\cos x) \cdot 1 = \cos x. \quad \blacksquare
+    \]
+\end{enumerate}
+
+\begin{esbox}[Esercizi svolti — Derivazione di funzioni composte trascendenti]
+Calcolare la derivata prima delle seguenti funzioni utilizzando il teorema di derivazione delle funzioni composte:
+\begin{enumerate}
+    \item $f_1(x) = e^{-x}$
+    \item $f_2(x) = \sin(3x^2 + 1)$
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Svolgimento.}
+\begin{enumerate}
+    \item La funzione $f_1(x) = e^{-x}$ è la composizione della funzione esterna $g(t) = e^t$ (con $g'(t) = e^t$) e della funzione interna $t(x) = -x$ (con $t'(x) = -1$). Applicando la regola della catena:
+    \[
+        D(e^{-x}) = e^{-x} \cdot (-1) = -e^{-x}.
+    \]
+
+    \item La funzione $f_2(x) = \sin(3x^2 + 1)$ è la composizione di $g(t) = \sin t$ (con $g'(t) = \cos t$) e $t(x) = 3x^2 + 1$ (con $t'(x) = 6x$). Applicando la regola della catena si ha:
+    \[
+        f_2'(x) = \cos(3x^2 + 1) \cdot 6x = 6x\cos(3x^2 + 1).
+    \]
+\end{enumerate}
+\end{esbox}
+
+\section{Funzioni Goniometriche e Logaritmiche, Funzioni Inverse e Confronto fra Infiniti}
+
+Completiamo lo studio delle derivate delle funzioni elementari (coseno, tangente e logaritmo in base qualunque), enunciamo e dimostriamo il teorema di derivazione della funzione inversa e introduciamo gli strumenti asintotici per il confronto tra infiniti.
+
+\subsection{Derivate di coseno, tangente e logaritmo}
+
+Proseguiamo il calcolo delle derivate elementari ricavando le regole di derivazione per le funzioni $f(x) = \cos x$, $f(x) = \tan x$ e $f(x) = \log_b x$.
+
+\begin{propbox}[Proposizione — Derivate di coseno, tangente e logaritmo]
+Valgono le seguenti formule di derivazione:
+\begin{enumerate}
+    \item \textbf{Funzione coseno:} $D(\cos x) = -\sin x$ per ogni $x \in \mathbb{R}$.
+    \item \textbf{Funzione tangente:} per ogni $x \in \mathbb{R}$ con $x \neq \dfrac{\pi}{2} + k\pi$ ($k \in \mathbb{Z}$),
+    \[
+        D(\tan x) = 1 + \tan^2 x = \frac{1}{\cos^2 x}.
+    \]
+    \item \textbf{Funzione logaritmo:} per ogni base $b > 0$ con $b \neq 1$ e per ogni $x \in \,]0, +\infty[$,
+    \[
+        D(\log_b x) = \frac{\log_b e}{x}.
+    \]
+    In particolare, per $b = e$ (logaritmo naturale) si ottiene $D(\log x) = \dfrac{1}{x}$.
+\end{enumerate}
+\end{propbox}
+
+\noindent\textbf{Dimostrazione.}
+\begin{enumerate}
+    \item Fissati $x \in \mathbb{R}$ e un incremento $h \neq 0$, scriviamo il rapporto incrementale di $f(x) = \cos x$ applicando la formula di addizione $\cos(x + h) = \cos x \cos h - \sin x \sin h$:
+    \begin{align*}
+        \frac{\cos(x+h) - \cos x}{h} &= \frac{\cos x \cos h - \sin x \sin h - \cos x}{h} \\
+        &= \cos x \left(\frac{\cos h - 1}{h}\right) - \sin x \left(\frac{\sin h}{h}\right).
+    \end{align*}
+    Passando al limite per $h \to 0$, sappiamo che $\frac{\cos h - 1}{h} \to 0$ e $\frac{\sin h}{h} \to 1$, per cui:
+    \[
+        \lim_{h \to 0} \frac{\cos(x+h) - \cos x}{h} = (\cos x)\cdot 0 - (\sin x)\cdot 1 = -\sin x.
+    \]
+
+    \item Scrivendo $\tan x = \dfrac{\sin x}{\cos x}$ per $x \neq \dfrac{\pi}{2} + k\pi$ ($k \in \mathbb{Z}$), il denominatore $\cos x$ non si annulla ed è derivabile. Applichiamo quindi la regola di derivazione del quoziente insieme all'identità fondamentale $\cos^2 x + \sin^2 x = 1$:
+    \[
+        D(\tan x) = D\!\left(\frac{\sin x}{\cos x}\right) = \frac{\cos x \cdot \cos x - \sin x \cdot (-\sin x)}{\cos^2 x} = \frac{\cos^2 x + \sin^2 x}{\cos^2 x} = 1 + \tan^2 x = \frac{1}{\cos^2 x}.
+    \]
+
+    \item Fissati $x > 0$ e $h \neq 0$ (con $x + h > 0$), utilizziamo le proprietà dei logaritmi per riscrivere il rapporto incrementale di $f(x) = \log_b x$:
+    \[
+        \frac{\log_b(x+h) - \log_b x}{h} = \frac{\log_b\!\left(\dfrac{x+h}{x}\right)}{h} = \frac{\log_b\!\left(1 + \dfrac{h}{x}\right)}{\dfrac{h}{x}} \cdot \frac{1}{x}.
+    \]
+    Effettuando la sostituzione $t = \dfrac{h}{x}$ (per cui $t \to 0$ quando $h \to 0$) e ricordando il limite notevole $\lim_{t \to 0} \frac{\log_b(1 + t)}{t} = \log_b e$, otteniamo:
+    \[
+        \lim_{h \to 0} \frac{\log_b(x+h) - \log_b x}{h} = \lim_{t \to 0} \frac{\log_b(1+t)}{t} \cdot \frac{1}{x} = \frac{\log_b e}{x}. \quad \blacksquare
+    \]
+\end{enumerate}
+
+\begin{esbox}[Esercizio svolto — Derivazione di funzioni logaritmiche e goniometriche composte]
+Calcolare la derivata prima delle seguenti funzioni nei rispettivi domini di derivabilità:
+\begin{enumerate}
+    \item $f_1(x) = \log_3(x^2 + 1)$
+    \item $f_2(x) = \tan(2x) - \cos(x^3)$
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Svolgimento.}
+\begin{enumerate}
+    \item Poiché $x^2 + 1 > 0$ per ogni $x \in \mathbb{R}$, $f_1$ è derivabile su tutto $\mathbb{R}$. Applicando la regola della catena con $g(t) = \log_3 t$ e $t(x) = x^2 + 1$:
+    \[
+        f_1'(x) = \frac{\log_3 e}{x^2 + 1} \cdot 2x = \frac{2x \log_3 e}{x^2 + 1}.
+    \]
+    \item Per linearità e regola della catena (per $2x \neq \frac{\pi}{2} + k\pi$, ossia $x \neq \frac{\pi}{4} + \frac{k\pi}{2}$ con $k \in \mathbb{Z}$):
+    \[
+        f_2'(x) = \frac{1}{\cos^2(2x)} \cdot 2 - \bigl(-\sin(x^3)\bigr) \cdot 3x^2 = \frac{2}{\cos^2(2x)} + 3x^2\sin(x^3).
+    \]
+\end{enumerate}
+\end{esbox}
+
+\subsection{Derivazione delle funzioni inverse}
+
+Il teorema seguente consente di determinare la derivata della funzione inversa $f^{-1}$ direttamente a partire dalla derivata di $f$, senza dover necessariamente esplicitare l'espressione analitica di $f^{-1}$.
+
+\begin{propbox}[Teorema — Derivazione delle funzioni inverse]
+Sia $f \colon \,]a,b[\, \to \mathbb{R}$ una funzione strettamente monotona e derivabile in $\,]a,b[$. Se $f'(x) \neq 0$ per ogni $x \in \,]a,b[$, allora la funzione inversa
+\[
+    f^{-1} \colon f\bigl(\,]a,b[\,\bigr) \to \,]a,b[
+\]
+è derivabile in ogni punto $y \in f\bigl(\,]a,b[\,\bigr)$ e risulta:
+\[
+    \bigl(f^{-1}\bigr)'(y) = \frac{1}{f'\bigl(f^{-1}(y)\bigr)}.
+\]
+\end{propbox}
+
+\noindent\textbf{Dimostrazione.} Fissato un generico punto $y \in J = f\bigl(\,]a,b[\,\bigr)$, esiste un unico $x \in \,]a,b[$ tale che $y = f(x)$, ovvero $x = f^{-1}(y)$. Poiché $f$ è derivabile su $\,]a,b[$, è anche ivi continua; per il teorema sulla continuità della funzione inversa di una funzione strettamente monotona su un intervallo, anche $f^{-1} \colon J \to \,]a,b[$ è continua e $J = f\bigl(\,]a,b[\,\bigr)$ è a sua volta un intervallo aperto.
+
+Sia ora $k \neq 0$ un incremento tale che $y + k \in J$, e poniamo:
+\[
+    h = f^{-1}(y + k) - f^{-1}(y).
+\]
+Osserviamo due proprietà fondamentali di $h$:
+\begin{itemize}
+    \item Poiché $f$ è strettamente monotona, $f^{-1}$ è iniettiva; dato che $k \neq 0$, si ha $y + k \neq y$, dunque $f^{-1}(y + k) \neq f^{-1}(y)$, ossia $h \neq 0$.
+    \item Per continuità di $f^{-1}$ nel punto $y$, quando $k \to 0$ si ha $f^{-1}(y + k) \to f^{-1}(y)$, e quindi $h \to 0$.
+\end{itemize}
+Inoltre, dalla definizione di $h$ ricaviamo $f^{-1}(y + k) = f^{-1}(y) + h = x + h$; applicando $f$ a entrambi i membri si ottiene $y + k = f(x + h)$, da cui $k = f(x + h) - f(x)$. Possiamo così riscrivere il rapporto incrementale di $f^{-1}$ in $y$ come:
+\[
+    \frac{f^{-1}(y + k) - f^{-1}(y)}{k} = \frac{h}{(y + k) - y} = \frac{h}{f(x + h) - f(x)} = \frac{1}{\dfrac{f(x + h) - f(x)}{h}}.
+\]
+Passando al limite per $k \to 0$ (che implica $h \to 0$ con $h \neq 0$) e ricordando che per ipotesi $f'(x) \neq 0$, concludiamo che:
+\[
+    \lim_{k \to 0} \frac{f^{-1}(y + k) - f^{-1}(y)}{k} = \lim_{h \to 0} \frac{1}{\dfrac{f(x + h) - f(x)}{h}} = \frac{1}{f'(x)} = \frac{1}{f'\bigl(f^{-1}(y)\bigr)}. \quad \blacksquare
+\]
+
+\begin{esbox}[Esercizio svolto — Derivata della funzione arcoseno]
+Utilizzare il teorema di derivazione delle funzioni inverse per dimostrare che per ogni $y \in \,]-1, 1[$ vale:
+\[
+    D(\arcsin y) = \frac{1}{\sqrt{1 - y^2}}.
+\]
+
+\medskip
+\noindent\textbf{Svolgimento.}
+Consideriamo la restrizione $f \colon \left]-\frac{\pi}{2}, \frac{\pi}{2}\right[ \to \mathbb{R}$ definita da $f(x) = \sin x$. Su tale intervallo aperto:
+\begin{itemize}
+    \item $f$ è strettamente crescente e derivabile con $f'(x) = \cos x$;
+    \item poiché $x \in \left]-\frac{\pi}{2}, \frac{\pi}{2}\right[$, risulta $\cos x > 0$ (dunque $f'(x) \neq 0$ ovunque);
+    \item l'immagine dell'intervallo è $f\!\left(\left]-\frac{\pi}{2}, \frac{\pi}{2}\right[\right) = \,]-1, 1[$ e la funzione inversa è $f^{-1}(y) = \arcsin y$.
+\end{itemize}
+Applicando la formula di derivazione della funzione inversa per ogni $y \in \,]-1, 1[$:
+\[
+    (\arcsin)'(y) = \frac{1}{\cos(\arcsin y)}.
+\]
+Poiché $\arcsin y \in \left]-\frac{\pi}{2}, \frac{\pi}{2}\right[$, il suo coseno è strettamente positivo, per cui dall'identità fondamentale $\cos^2 t + \sin^2 t = 1$ si ricava $\cos(\arcsin y) = \sqrt{1 - \sin^2(\arcsin y)} = \sqrt{1 - y^2}$. Sostituendo nel denominatore:
+\[
+    D(\arcsin y) = \frac{1}{\sqrt{1 - y^2}} \quad \forall y \in \,]-1, 1[.
+\]
+\end{esbox}
+
+\subsection{Confronto fra infiniti}
+
+Per stabilire una gerarchia tra funzioni che divergono allo stesso punto di accumulazione, introduciamo formalmente il concetto di ordine di infinito.
+
+\begin{defbox}[Definizione — Confronto tra infiniti]
+Siano $f$ e $g$ due funzioni definite in un intorno bucato di $x_0$ (con $x_0 \in \overline{\mathbb{R}}$) ed entrambe \textbf{infinite} per $x \to x_0$, ovvero tali che:
+\[
+    \lim_{x \to x_0} |f(x)| = +\infty \quad \text{e} \quad \lim_{x \to x_0} |g(x)| = +\infty.
+\]
+\begin{enumerate}
+    \item Si dice che $f$ è un \textbf{infinito di ordine superiore} rispetto a $g$ (o, equivalentemente, che $g$ è un infinito di ordine inferiore rispetto a $f$) per $x \to x_0$ se:
+    \[
+        \lim_{x \to x_0} \frac{g(x)}{f(x)} = 0 \quad \left(\text{oppure equivalentemente } \lim_{x \to x_0} \left|\frac{f(x)}{g(x)}\right| = +\infty\right).
+    \]
+    In tal caso si scrive, tramite la notazione di Landau, che $g(x) = o\bigl(f(x)\bigr)$ per $x \to x_0$.
+
+    \item Si dice che $f$ e $g$ sono \textbf{infiniti dello stesso ordine} per $x \to x_0$ se esiste un numero reale non nullo $\lambda \in \mathbb{R} \setminus \{0\}$ tale che:
+    \[
+        \lim_{x \to x_0} \frac{g(x)}{f(x)} = \lambda.
+    \]
+\end{enumerate}
+\end{defbox}
+
+\noindent\textbf{Osservazione (legame con gli infinitesimi).} Poiché $f$ e $g$ sono infiniti per $x \to x_0$, le rispettive funzioni reciproche $\dfrac{1}{f(x)}$ e $\dfrac{1}{g(x)}$ sono infinitesime per $x \to x_0$. Il confronto tra gli infiniti $f$ e $g$ si riconduce immediatamente al confronto tra gli infinitesimi $\frac{1}{f}$ e $\frac{1}{g}$ tramite l'identità algebrica:
+\[
+    \frac{g(x)}{f(x)} = \frac{\dfrac{1}{f(x)}}{\dfrac{1}{g(x)}}.
+\]
+
+\begin{esbox}[Esercizio svolto — Confronto tra due infiniti per $x \to +\infty$]
+Confrontare per $x \to +\infty$ gli infiniti $g(x) = x$ e $f(x) = \sqrt{1 + x^3}$ calcolando il limite del loro rapporto:
+\[
+    \lim_{x \to +\infty} \frac{x}{\sqrt{1 + x^3}}.
+\]
+
+\medskip
+\noindent\textbf{Svolgimento.}
+Entrambe le funzioni tendono a $+\infty$ per $x \to +\infty$. Per calcolare il limite del rapporto, raccogliamo il termine dominante $x^3$ sotto la radice quadrata al denominatore (osservando che per $x > 0$ si ha $\sqrt{x^3} = x^{3/2}$):
+\[
+    \lim_{x \to +\infty} \frac{x}{\sqrt{1 + x^3}} = \lim_{x \to +\infty} \frac{x}{x^{3/2}\sqrt{\dfrac{1}{x^3} + 1}} = \lim_{x \to +\infty} \frac{1}{\sqrt{x}} \cdot \frac{1}{\sqrt{\dfrac{1}{x^3} + 1}}.
+\]
+Poiché $\frac{1}{\sqrt{x}} \to 0$ e $\frac{1}{\sqrt{\frac{1}{x^3} + 1}} \to 1$ per $x \to +\infty$, il prodotto tende a $0$:
+\[
+    \lim_{x \to +\infty} \frac{x}{\sqrt{1 + x^3}} = 0.
+\]
+Concludiamo pertanto che $f(x) = \sqrt{1 + x^3}$ è un \textbf{infinito di ordine superiore} rispetto a $g(x) = x$ per $x \to +\infty$, ossia $x = o\bigl(\sqrt{1 + x^3}\bigr)$ per $x \to +\infty$.
+\end{esbox}
+
+\section{Applicazioni della Derivata Inversa, Potenze Reali ed Esercizi di Riepilogo}
+
+In questa sezione applichiamo il teorema di derivazione delle funzioni inverse per ricavare le derivate delle funzioni goniometriche inverse ($\arcsin x$, $\arccos x$, $\arctan x$) e ritrovare la derivata del logaritmo. Estendiamo poi la formula di derivazione delle potenze a un esponente reale qualsiasi $\alpha \in \mathbb{R}$, analizzando il comportamento nell'origine $x = 0$, e svolgiamo alcuni esercizi riepilogativi sulla regola della catena e sulla derivabilità delle funzioni definite a tratti.
+
+\subsection{Interpretazione geometrica e derivate delle funzioni goniometriche inverse}
+
+Dal punto di vista geometrico, il grafico della funzione inversa $f^{-1}$ si ottiene simmetrizzando il grafico di $f$ rispetto alla bisettrice del primo e del terzo quadrante ($y = x$). Di conseguenza, se la retta tangente al grafico di $f$ nel punto $\bigl(a, f(a)\bigr)$ ha coefficiente angolare $f'(a) \neq 0$, la retta tangente al grafico di $f^{-1}$ nel punto simmetrico $\bigl(f(a), a\bigr)$ ha coefficiente angolare reciproco, pari a $\dfrac{1}{f'(a)}$.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.46\textwidth,
+    height=4.8cm,
+    name=plot1,
+    axis lines=middle,
+    axis line style={fglight!60, -stealth},
+    tick label style={font=\footnotesize, color=fglight!70},
+    xlabel={$x$}, ylabel={$y$},
+    xlabel style={at={(ticklabel* cs:1)}, anchor=west, color=fglight!80},
+    ylabel style={at={(ticklabel* cs:1)}, anchor=south, color=fglight!80},
+    xmin=-0.3, xmax=2.8,
+    ymin=-0.3, ymax=3.2,
+    xtick={1.5}, xticklabels={$a$},
+    ytick={1.125}, yticklabels={$f(a)$},
+    grid=major,
+    grid style={dashed, fglight!15},
+    title={\footnotesize\color{fglight!80}Grafico di $f$ con pendenza $f'(a)$}
+]
+% Curva f(x) = 0.5*x^2
+\addplot[very thick, color=accentcyan, domain=0:2.4] {0.5*x^2} node[pos=0.85, anchor=south east, font=\footnotesize] {$f$};
+% Tangente in a = 1.5: y = 1.125 + 1.5*(x - 1.5)
+\addplot[thick, color=accentpurple, domain=0.6:2.4] {1.125 + 1.5*(x - 1.5)};
+\addplot[dashed, color=fglight!40] coordinates {(1.5,0) (1.5,1.125) (0,1.125)};
+\addplot[only marks, mark=*, mark size=2pt, color=accentcyan] coordinates {(1.5,1.125)};
+\end{axis}
+
+\begin{axis}[
+    at={(plot1.outer east)}, anchor=outer west, xshift=0.8cm,
+    width=0.46\textwidth,
+    height=4.8cm,
+    axis lines=middle,
+    axis line style={fglight!60, -stealth},
+    tick label style={font=\footnotesize, color=fglight!70},
+    xlabel={$x$}, ylabel={$y$},
+    xlabel style={at={(ticklabel* cs:1)}, anchor=west, color=fglight!80},
+    ylabel style={at={(ticklabel* cs:1)}, anchor=south, color=fglight!80},
+    xmin=-0.3, xmax=3.2,
+    ymin=-0.3, ymax=2.8,
+    xtick={1.125}, xticklabels={$f(a)$},
+    ytick={1.5}, yticklabels={$a$},
+    grid=major,
+    grid style={dashed, fglight!15},
+    title={\footnotesize\color{fglight!80}Grafico di $f^{-1}$ con pendenza $1/f'(a)$}
+]
+% Curva f^{-1}(x) = sqrt(2*x)
+\addplot[very thick, color=accentcyan, domain=0:2.9, samples=100] {sqrt(2*x)} node[pos=0.85, anchor=south east, font=\footnotesize] {$f^{-1}$};
+% Tangente in f(a) = 1.125: y = 1.5 + (2/3)*(x - 1.125)
+\addplot[thick, color=accentpurple, domain=0.1:2.6] {1.5 + (2/3)*(x - 1.125)};
+\addplot[dashed, color=fglight!40] coordinates {(1.125,0) (1.125,1.5) (0,1.5)};
+\addplot[only marks, mark=*, mark size=2pt, color=accentcyan] coordinates {(1.125,1.5)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+Sfruttiamo ora il teorema di derivazione delle funzioni inverse per determinare le derivate di $\arcsin x$, $\arccos x$, $\arctan x$ e $\log_b x$.
+
+\begin{propbox}[Proposizione — Derivate delle funzioni goniometriche inverse]
+Valgono le seguenti formule di derivazione:
+\begin{enumerate}
+    \item \textbf{Arcoseno:} $\arcsin \colon [-1, 1] \to \left[-\dfrac{\pi}{2}, \dfrac{\pi}{2}\right]$ è derivabile sull'intervallo aperto $\,]-1, 1[$ e risulta:
+    \[
+        D(\arcsin x) = \frac{1}{\sqrt{1 - x^2}} \quad \forall x \in \,]-1, 1[.
+    \]
+    \item \textbf{Arcocoseno:} $\arccos \colon [-1, 1] \to [0, \pi]$ è derivabile sull'intervallo aperto $\,]-1, 1[$ e risulta:
+    \[
+        D(\arccos x) = -\frac{1}{\sqrt{1 - x^2}} \quad \forall x \in \,]-1, 1[.
+    \]
+    \item \textbf{Arcotangente:} $\arctan \colon \mathbb{R} \to \left]-\dfrac{\pi}{2}, \dfrac{\pi}{2}\right[$ è derivabile su tutto $\mathbb{R}$ e risulta:
+    \[
+        D(\arctan x) = \frac{1}{1 + x^2} \quad \forall x \in \mathbb{R}.
+    \]
+\end{enumerate}
+\end{propbox}
+
+\noindent\textbf{Dimostrazione.}
+\begin{enumerate}
+    \item Consideriamo la funzione $f(t) = \sin t$ ristretta all'intervallo $\left]-\frac{\pi}{2}, \frac{\pi}{2}\right[$, dove è strettamente crescente e derivabile con $f'(t) = \cos t > 0$ per ogni $t \in \left]-\frac{\pi}{2}, \frac{\pi}{2}\right[$. La sua inversa è $\arcsin \colon \,]-1, 1[\, \to \left]-\frac{\pi}{2}, \frac{\pi}{2}\right[$. Applicando la formula di derivazione della funzione inversa, per ogni $x \in \,]-1, 1[$ si ha:
+    \[
+        D(\arcsin x) = \frac{1}{\cos(\arcsin x)}.
+    \]
+    Poiché $\arcsin x \in \left]-\frac{\pi}{2}, \frac{\pi}{2}\right[$, il suo coseno è strettamente positivo; dall'identità fondamentale $\cos^2 t + \sin^2 t = 1$ segue $\cos(\arcsin x) = \sqrt{1 - \sin^2(\arcsin x)} = \sqrt{1 - x^2}$. Dunque:
+    \[
+        D(\arcsin x) = \frac{1}{\sqrt{1 - x^2}} \quad \forall x \in \,]-1, 1[.
+    \]
+
+    \item Consideriamo la funzione $f(t) = \cos t$ ristretta all'intervallo $\,]0, \pi[$, dove è strettamente decrescente e derivabile con $f'(t) = -\sin t < 0$ per ogni $t \in \,]0, \pi[$. La sua inversa è $\arccos \colon \,]-1, 1[\, \to \,]0, \pi[$. Per ogni $x \in \,]-1, 1[$ risulta:
+    \[
+        D(\arccos x) = \frac{1}{-\sin(\arccos x)}.
+    \]
+    Poiché $\arccos x \in \,]0, \pi[$, si ha $\sin(\arccos x) > 0$, per cui $\sin(\arccos x) = \sqrt{1 - \cos^2(\arccos x)} = \sqrt{1 - x^2}$. Pertanto:
+    \[
+        D(\arccos x) = -\frac{1}{\sqrt{1 - x^2}} \quad \forall x \in \,]-1, 1[.
+    \]
+
+    \item Consideriamo la funzione $f(t) = \tan t$ ristretta a $\left]-\frac{\pi}{2}, \frac{\pi}{2}\right[$, dove è strettamente crescente e derivabile con $f'(t) = 1 + \tan^2 t > 0$. La sua inversa è $\arctan \colon \mathbb{R} \to \left]-\frac{\pi}{2}, \frac{\pi}{2}\right[$. Per ogni $x \in \mathbb{R}$ si ottiene:
+    \[
+        D(\arctan x) = \frac{1}{1 + \tan^2(\arctan x)} = \frac{1}{1 + x^2}. \quad \blacksquare
+    \]
+\end{enumerate}
+
+\noindent\textbf{Osservazione (derivata del logaritmo tramite funzione inversa).} La formula $D(\log_b x) = \dfrac{\log_b e}{x}$ ($b > 0, b \neq 1, x > 0$) può essere ottenuta immediatamente anche come applicazione del teorema della funzione inversa: infatti $f(t) = b^t$ è strettamente monotona su $\mathbb{R}$ con derivata $f'(t) = b^t \log b \neq 0$ per ogni $t \in \mathbb{R}$. Poiché la sua inversa è $f^{-1}(x) = \log_b x$, si ha:
+\[
+    D(\log_b x) = \frac{1}{b^{\log_b x} \log b} = \frac{1}{x \log b} = \frac{\log_b e}{x} \quad \forall x > 0.
+\]
+
+\subsection{Derivata della potenza con esponente reale $x^\alpha$}
+
+Estendiamo ora la regola di derivazione $D(x^n) = n x^{n-1}$ (già nota per $n \in \mathbb{N}$) al caso in cui l'esponente sia un qualsiasi numero reale $\alpha \in \mathbb{R}$.
+
+\begin{propbox}[Proposizione — Derivata della funzione potenza $x^\alpha$]
+Sia $\alpha \in \mathbb{R}$. La funzione $f(x) = x^\alpha$ è derivabile per ogni $x > 0$ e risulta:
+\[
+    D(x^\alpha) = \alpha x^{\alpha - 1} \quad \forall x > 0.
+\]
+Inoltre, se $\alpha > 0$, la funzione $f(x) = x^\alpha$ si estende con continuità in $x = 0$ ponendo $0^\alpha = 0$, e il suo comportamento di derivabilità nell'origine dipende dal valore di $\alpha$:
+\begin{itemize}
+    \item se $\alpha \ge 1$, $f(x) = x^\alpha$ è \textbf{derivabile da destra in $0$} con $f'_{+}(0) = 1$ se $\alpha = 1$ e $f'_{+}(0) = 0$ se $\alpha > 1$;
+    \item se $0 < \alpha < 1$, $f(x) = x^\alpha$ \textbf{non è derivabile in $0$} (presenta una tangente verticale con $f'_{+}(0) = +\infty$).
+\end{itemize}
+\end{propbox}
+
+\noindent\textbf{Dimostrazione.}
+Per $x > 0$, possiamo riscrivere $x^\alpha$ in forma esponenziale come $x^\alpha = e^{\log(x^\alpha)} = e^{\alpha \log x}$. Applicando il teorema di derivazione delle funzioni composte con funzione esterna $g(t) = e^t$ e funzione interna $t(x) = \alpha \log x$, otteniamo:
+\[
+    D(x^\alpha) = D\!\left(e^{\alpha \log x}\right) = e^{\alpha \log x} \cdot \frac{\alpha}{x} = x^\alpha \cdot \frac{\alpha}{x} = \alpha x^{\alpha - 1} \quad \forall x > 0.
+\]
+
+Supponiamo ora $\alpha > 0$ e studiamo il comportamento in $x_0 = 0$. Poiché $\lim_{x \to 0^+} x^\alpha = 0 = 0^\alpha$, la funzione $f(x) = x^\alpha$ è continua da destra in $0$. Calcoliamo il limite destro del rapporto incrementale in $0$ per $x > 0$:
+\[
+    \frac{f(x) - f(0)}{x - 0} = \frac{x^\alpha}{x} = x^{\alpha - 1} \xrightarrow{x \to 0^+}
+    \begin{cases}
+        1 & \text{se } \alpha = 1, \\
+        0 & \text{se } \alpha > 1, \\
+        +\infty & \text{se } 0 < \alpha < 1.
+    \end{cases}
+\]
+Ne segue che per $\alpha \ge 1$ il limite esiste finito (dunque $x^\alpha$ è derivabile da destra in $0$, con derivata nulla se $\alpha > 1$), mentre per $0 < \alpha < 1$ il limite è $+\infty$ e la funzione non è derivabile in $0$. In particolare, per $\alpha = \frac{1}{2}$, la funzione $f(x) = \sqrt{x}$ ($x \ge 0$) è continua in $0$ ma \textbf{non è derivabile in $0$}. $\blacksquare$
+
+\subsection{Esercizi svolti di riepilogo}
+
+Applichiamo le regole apprese al calcolo di derivate composte e allo studio della derivabilità di funzioni definite a tratti.
+
+\begin{esbox}[Esercizio svolto — Calcolo di derivate tramite la regola della catena]
+Calcolare la derivata prima delle seguenti funzioni:
+\begin{enumerate}
+    \item $f_1(x) = e^{-x^2}$
+    \item $f_2(x) = \sqrt{1 + x^2}$
+    \item $f_3(x) = \sin\!\left(e^{\cos(x^2)}\right)$
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Svolgimento.}
+\begin{enumerate}
+    \item Applicando la derivata dell'esponenziale composta con $t(x) = -x^2$:
+    \[
+        D\!\left(e^{-x^2}\right) = e^{-x^2} \cdot (-2x) = -2x e^{-x^2}.
+    \]
+
+    \item Scrivendo $\sqrt{1 + x^2} = (1 + x^2)^{1/2}$ e applicando la regola della potenza composta (poiché $1 + x^2 > 0$ per ogni $x \in \mathbb{R}$, la funzione è derivabile ovunque):
+    \[
+        D\!\left(\sqrt{1 + x^2}\right) = \frac{1}{2}(1 + x^2)^{\frac{1}{2} - 1} \cdot 2x = \frac{x}{\sqrt{1 + x^2}}.
+    \]
+
+    \item Applicando ripetutamente il teorema di derivazione delle funzioni composte dall'esterno verso l'interno ($\sin \to \exp \to \cos \to x^2$):
+    \begin{align*}
+        D\!\left[\sin\!\left(e^{\cos(x^2)}\right)\right] &= \cos\!\left(e^{\cos(x^2)}\right) \cdot e^{\cos(x^2)} \cdot \bigl(-\sin(x^2)\bigr) \cdot 2x \\
+        &= -2x \sin(x^2)\, e^{\cos(x^2)} \cos\!\left(e^{\cos(x^2)}\right).
+    \end{align*}
+\end{enumerate}
+\end{esbox}
+
+\begin{esbox}[Esercizio svolto — Derivabilità in un punto di raccordo]
+Data la funzione definita a tratti:
+\[
+    f(x) = \begin{cases} x^2 & \text{se } x \ge 4, \\ ax + b & \text{se } x < 4, \end{cases}
+\]
+determinare i parametri reali $a, b \in \mathbb{R}$ in modo che $f$ sia derivabile nel punto $x_0 = 4$.
+
+\medskip
+\noindent\textbf{Svolgimento.}
+Osserviamo preliminarmente che per $x_0 < 4$ si ha $f'(x_0) = a$, mentre per $x_0 > 4$ si ha $f'(x_0) = 2x_0$, quindi $f$ è certamente derivabile in $\mathbb{R} \setminus \{4\}$ per qualsiasi scelta di $a, b \in \mathbb{R}$.
+
+\begin{enumerate}
+    \item \textbf{Condizione necessaria di continuità in $x_0 = 4$:} Affinché $f$ sia derivabile in $4$, deve prima di tutto essere continua in $4$. Calcoliamo i limiti sinistro e destro:
+    \begin{align*}
+        \lim_{x \to 4^-} f(x) &= \lim_{x \to 4^-} (ax + b) = 4a + b, \\
+        \lim_{x \to 4^+} f(x) &= \lim_{x \to 4^+} x^2 = 16 = f(4).
+    \end{align*}
+    Uguagliando i due valori si ottiene la condizione di continuità:
+    \[
+        4a + b = 16 \iff b - 16 = -4a.
+    \]
+
+    \item \textbf{Calcolo delle derivate sinistra e destra in $x_0 = 4$:} Supponendo soddisfatta la condizione di continuità ($b - 16 = -4a$), calcoliamo i limiti sinistro e destro del rapporto incrementale in $x_0 = 4$:
+    \begin{align*}
+        \lim_{x \to 4^-} \frac{f(x) - f(4)}{x - 4} &= \lim_{x \to 4^-} \frac{ax + b - 16}{x - 4} = \lim_{x \to 4^-} \frac{ax - 4a}{x - 4} = \lim_{x \to 4^-} \frac{a(x - 4)}{x - 4} = a, \\
+        \lim_{x \to 4^+} \frac{f(x) - f(4)}{x - 4} &= \lim_{x \to 4^+} \frac{x^2 - 16}{x - 4} = \lim_{x \to 4^+} \frac{(x - 4)(x + 4)}{x - 4} = 8.
+    \end{align*}
+\end{enumerate}
+Affinché $f$ sia derivabile in $4$, la derivata sinistra e la derivata destra devono coincidere, dunque $a = 8$. Sostituendo tale valore nella condizione di continuità ricaviamo $b$:
+\[
+    b = 16 - 4a = 16 - 4(8) = 16 - 32 = -16.
+\]
+In conclusione, la funzione $f$ è derivabile in $x_0 = 4$ (e quindi su tutto $\mathbb{R}$) se e solo se $a = 8$ e $b = -16$.
+\end{esbox}
+
+\section{Analisi della Derivabilità agli Estremi del Dominio e Teorema di Rolle}
+
+In questa sezione completiamo lo studio della derivabilità analizzando casi critici in cui le regole di derivazione standard non sono direttamente applicabili (ad esempio nei punti di non derivabilità di funzioni elementari che le compongono) ed enunciamo il \textbf{Teorema di Rolle}, primo risultato fondamentale del calcolo differenziale sulle proprietà globali delle funzioni derivabili.
+
+\subsection{Esercizi svolti sulla derivabilità in punti critici}
+
+Quando una funzione è ottenuta componendo o moltiplicando funzioni che presentano punti di non derivabilità (come $\sqrt{x}$ o $|x|$ in $x_0 = 0$), le regole algebriche di derivazione sono valide al di fuori di tali punti, mentre nel punto critico è necessario ricorrere direttamente alla definizione tramite il limite del rapporto incrementale.
+
+\begin{esbox}[Esercizio svolto — Derivabilità di $f(x) = \sin\sqrt{x}$]
+Studiare il dominio di derivabilità della funzione $f \colon [0, +\infty[\, \to \mathbb{R}$ definita da:
+\[
+    f(x) = \sin\sqrt{x}.
+\]
+
+\medskip
+\noindent\textbf{Svolgimento.}
+Per $x \in \,]0, +\infty[$, sia $t(x) = \sqrt{x}$ sia $g(t) = \sin t$ sono derivabili; pertanto, per il teorema di derivazione delle funzioni composte, $f$ è derivabile su tutto $\,]0, +\infty[$ con derivata:
+\[
+    f'(x) = \cos\sqrt{x} \cdot \frac{1}{2\sqrt{x}} \quad \forall x > 0.
+\]
+Resta da verificare la derivabilità da destra nell'estremo $x_0 = 0$. Calcoliamo il limite destro del rapporto incrementale in $0$ per $x > 0$ (ricordando che $f(0) = \sin 0 = 0$ e scrivendo $x = (\sqrt{x})^2$):
+\[
+    \frac{f(x) - f(0)}{x - 0} = \frac{\sin\sqrt{x}}{x} = \frac{\sin\sqrt{x}}{\sqrt{x}} \cdot \frac{1}{\sqrt{x}}.
+\]
+Per $x \to 0^+$, dal limite notevole del seno si ha $\dfrac{\sin\sqrt{x}}{\sqrt{x}} \to 1$, mentre $\dfrac{1}{\sqrt{x}} \to +\infty$. Pertanto:
+\[
+    \lim_{x \to 0^+} \frac{f(x) - f(0)}{x} = +\infty.
+\]
+Poiché il limite non è finito, concludiamo che $f(x) = \sin\sqrt{x}$ \textbf{non è derivabile in $x_0 = 0$} (presenta una tangente verticale destra), mentre è derivabile su $\,]0, +\infty[$.
+\end{esbox}
+
+\begin{esbox}[Esercizio svolto — Derivabilità di $f(x) = x^2 - x|x|$]
+Studiare la derivabilità su tutto $\mathbb{R}$ della funzione:
+\[
+    f(x) = x^2 - x|x|.
+\]
+
+\medskip
+\noindent\textbf{Svolgimento.}
+Per ogni $x \neq 0$, la funzione valore assoluto $|x|$ è derivabile con derivata $D(|x|) = \dfrac{|x|}{x}$ (infatti vale $1$ per $x > 0$ e $-1$ per $x < 0$). Per $x \neq 0$, dunque, $f$ è derivabile per le regole algebriche di derivazione del prodotto e della differenza:
+\[
+    f'(x) = 2x - \left(1 \cdot |x| + x \cdot \frac{|x|}{x}\right) = 2x - |x| - |x| = 2(x - |x|) \quad \forall x \neq 0.
+\]
+Poiché $|x|$ non è derivabile in $x_0 = 0$, per stabilire se $f$ sia derivabile in $0$ calcoliamo direttamente il limite del rapporto incrementale in $x_0 = 0$ (osservando che $f(0) = 0$ e raccogliendo $x$ per $x \neq 0$):
+\[
+    \frac{f(x) - f(0)}{x - 0} = \frac{x^2 - x|x|}{x} = x - |x| \xrightarrow{x \to 0} 0.
+\]
+Il limite del rapporto incrementale esiste finito e vale $0$: la presenza del fattore $x$ davanti a $|x|$ "regolarizza" il punto angoloso nell'origine. Pertanto $f$ \textbf{è derivabile su tutto $\mathbb{R}$} con $f'(0) = 0$ (e più in generale $f'(x) = 2(x - |x|)$ per ogni $x \in \mathbb{R}$).
+\end{esbox}
+
+\subsection{Il Teorema di Rolle}
+
+Il Teorema di Rolle afferma che se una funzione continua su un intervallo chiuso e limitato e derivabile nei punti interni assume lo stesso valore agli estremi, allora esiste almeno un punto interno in cui la retta tangente al grafico è orizzontale.
+
+\begin{propbox}[Teorema — Teorema di Rolle]
+Sia $f \colon [a,b] \to \mathbb{R}$ una funzione tale che:
+\begin{enumerate}
+    \item $f$ è \textbf{continua} sull'intervallo chiuso e limitato $[a,b]$;
+    \item $f$ è \textbf{derivabile} nell'intervallo aperto $\,]a,b[$;
+    \item $f(a) = f(b)$.
+\end{enumerate}
+Allora esiste almeno un punto $\xi \in \,]a,b[$ tale che:
+\[
+    f'(\xi) = 0.
+\]
+\end{propbox}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.78\textwidth,
+    height=4.8cm,
+    axis lines=middle,
+    axis line style={fglight!60, -stealth},
+    tick label style={font=\footnotesize, color=fglight!70},
+    xlabel={$x$}, ylabel={$y$},
+    xlabel style={at={(ticklabel* cs:1)}, anchor=west, color=fglight!80},
+    ylabel style={at={(ticklabel* cs:1)}, anchor=south, color=fglight!80},
+    xmin=0.3, xmax=4.5,
+    ymin=-0.6, ymax=2.4,
+    xtick={0.8, 1.54, 2.86, 3.6},
+    xticklabels={$a$, $\xi_1$, $\xi_2$, $b$},
+    ytick={0.8},
+    yticklabels={$f(a)=f(b)$},
+    grid=major,
+    grid style={dashed, fglight!15}
+]
+% Funzione f(x) = 0.8 + 0.9*sin(deg(2.244*(x - 0.8))) che vale 0.8 in a=0.8 e b=3.6
+\addplot[very thick, color=accentcyan, domain=0.8:3.6, samples=120] {0.8 + 0.9*sin(deg(2.244*(x - 0.8)))};
+
+% Linea tratteggiata f(a) = f(b)
+\addplot[dashed, color=fglight!50, domain=0:3.6] {0.8};
+\addplot[dashed, color=fglight!40] coordinates {(0.8,0) (0.8,0.8)};
+\addplot[dashed, color=fglight!40] coordinates {(3.6,0) (3.6,0.8)};
+
+% Tangenti orizzontali nei punti stazionari xi_1 e xi_2
+\addplot[thick, color=accentpurple, domain=1.05:2.03] {1.7};
+\addplot[thick, color=accentpurple, domain=2.37:3.35] {-0.1};
+\addplot[dashed, color=accentpurple!70] coordinates {(1.54,0) (1.54,1.7)};
+\addplot[dashed, color=accentpurple!70] coordinates {(2.86,0) (2.86,-0.1)};
+
+% Punti chiave
+\addplot[only marks, mark=*, mark size=2.2pt, color=accentcyan] coordinates {(0.8,0.8) (3.6,0.8)};
+\addplot[only marks, mark=*, mark size=2.2pt, color=accentpurple] coordinates {(1.54,1.7) (2.86,-0.1)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\noindent\textbf{Dimostrazione.} Distinguiamo due casi a seconda che $f$ sia costante o meno sull'intervallo $[a,b]$:
+
+\begin{itemize}
+    \item \textbf{Caso 1 ($f$ è costante in $[a,b]$):} Se $f(x) = c$ per ogni $x \in [a,b]$, allora $f'(x) = 0$ per ogni $x \in \,]a,b[$, dunque la tesi è banalmente verificata per un qualunque punto $\xi \in \,]a,b[$.
+
+    \item \textbf{Caso 2 ($f$ non è costante in $[a,b]$):} Poiché per ipotesi $f$ è continua sull'intervallo chiuso e limitato $[a,b]$, per il \textbf{Teorema di Weierstrass} $f$ ammette minimo assoluto $m$ e massimo assoluto $M$ in $[a,b]$; esistono cioè due punti $\xi, \eta \in [a,b]$ tali che:
+    \[
+        m = \min_{[a,b]} f = f(\xi), \qquad M = \max_{[a,b]} f = f(\eta).
+    \]
+    Non essendo $f$ costante, deve risultare $m < M$. Osserviamo che almeno uno tra i due punti $\xi$ ed $\eta$ deve essere \textbf{interno} all'intervallo aperto $\,]a,b[$: infatti, se per assurdo entrambi appartenessero alla frontiera $\{a, b\}$, per l'ipotesi $f(a) = f(b)$ si avrebbe
+    \[
+        m = f(\xi) = f(a) = f(b) = f(\eta) = M,
+    \]
+    cioè minimo e massimo coinciderebbero, contro il fatto che $m < M$.
+
+    Supponiamo senza perdita di generalità che il punto di minimo $\xi$ sia interno all'intervallo, ossia $\xi \in \,]a,b[$ (il ragionamento per $\eta \in \,]a,b[$ è del tutto analogo). Dimostriamo che $f'(\xi) = 0$ (questo risultato è noto anche come \emph{Teorema di Fermat}).
+    Per ogni $h \in \mathbb{R} \setminus \{0\}$ sufficientemente piccolo affinché $\xi + h \in \,]a,b[$, essendo $\xi$ un punto di minimo globale si ha $f(\xi + h) \ge m = f(\xi)$, ossia $f(\xi + h) - f(\xi) \ge 0$. Dividendo per $h$, il segno del rapporto incrementale dipende dal segno di $h$:
+    \[
+        \frac{f(\xi + h) - f(\xi)}{h}
+        \begin{cases}
+            \ge 0 & \text{se } h > 0, \\
+            \le 0 & \text{se } h < 0.
+        \end{cases}
+    \]
+    Poiché per ipotesi $f$ è derivabile in $\xi \in \,]a,b[$, il limite del rapporto incrementale per $h \to 0$ esiste finito e coincide con i limiti destro e sinistro. Per il teorema della permanenza del segno (applicato in forma debole al limite destro e sinistro) si ottiene:
+    \begin{align*}
+        f'(\xi) &= \lim_{h \to 0^+} \frac{f(\xi + h) - f(\xi)}{h} \ge 0, \\
+        f'(\xi) &= \lim_{h \to 0^-} \frac{f(\xi + h) - f(\xi)}{h} \le 0.
+    \end{align*}
+    L'unico numero reale contemporaneamente $\ge 0$ e $\le 0$ è lo zero: concludiamo pertanto che $f'(\xi) = 0$. $\blacksquare$
+\end{itemize}
+
+\subsection{Necessità delle ipotesi del Teorema di Rolle}
+
+Tutte e tre le ipotesi del Teorema di Rolle sono essenziali: se ne viene a mancare anche una sola, l'esistenza di un punto interno con derivata nulla non è più garantita.
+
+\begin{esbox}[Controesempi — Necessità delle tre ipotesi del Teorema di Rolle]
+Analizziamo tre funzioni in cui viene violata esattamente una delle tre ipotesi del teorema, verificando che per nessuna di esse esiste un punto interno in cui $f'(\xi) = 0$:
+
+\begin{enumerate}
+    \item \textbf{Manca l'ipotesi $f(a) = f(b)$:} Consideriamo $f \colon [0, 1] \to \mathbb{R}$ definita da $f(x) = x$. La funzione è continua su $[0,1]$ e derivabile su $\,]0,1[$, ma $f(0) = 0 \neq 1 = f(1)$. Infatti, $f'(x) = 1 \neq 0$ per ogni $x \in \,]0,1[$.
+
+    \item \textbf{Manca l'ipotesi di continuità in $[a,b]$:} Consideriamo $f \colon [0, 1] \to \mathbb{R}$ definita da:
+    \[
+        f(x) = \begin{cases} x & \text{se } x \in \,]0, 1], \\ 1 & \text{se } x = 0. \end{cases}
+    \]
+    Qui si ha $f(0) = 1 = f(1)$ e $f$ è derivabile su $\,]0,1[$ con $f'(x) = 1 \neq 0$ ovunque, ma la tesi non vale perché $f$ non è continua nell'estremo $x = 0$ ($\lim_{x \to 0^+} f(x) = 0 \neq 1 = f(0)$).
+
+    \item \textbf{Manca l'ipotesi di derivabilità in $\,]a,b[$:} Consideriamo $f \colon [-1, 1] \to \mathbb{R}$ definita da $f(x) = |x|$. La funzione è continua su $[-1, 1]$ e verifica $f(-1) = 1 = f(1)$, ma non è derivabile nel punto interno $x_0 = 0$. In tutti gli altri punti interni $x \in \,]-1, 1[\, \setminus \{0\}$ si ha:
+    \[
+        f'(x) = \frac{|x|}{x} = \begin{cases} 1 & \text{se } x > 0, \\ -1 & \text{se } x < 0, \end{cases}
+    \]
+    dunque la derivata non si annulla mai.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}
+% Grafico 1: f(x) = x
+\begin{axis}[
+    width=0.31\textwidth,
+    height=3.8cm,
+    name=c1,
+    axis lines=middle,
+    axis line style={fglight!60, -stealth},
+    tick label style={font=\scriptsize, color=fglight!70},
+    xmin=-0.2, xmax=1.35,
+    ymin=-0.2, ymax=1.35,
+    xtick={1}, ytick={1},
+    grid=major,
+    grid style={dashed, fglight!15},
+    title={\scriptsize\color{fglight!80}1) $f(0) \neq f(1)$}
+]
+\addplot[very thick, color=accentcyan, domain=0:1] {x};
+\addplot[dashed, color=fglight!40] coordinates {(1,0) (1,1) (0,1)};
+\addplot[only marks, mark=*, mark size=1.8pt, color=accentcyan] coordinates {(0,0) (1,1)};
+\end{axis}
+
+% Grafico 2: Discontinua in 0
+\begin{axis}[
+    at={(c1.outer east)}, anchor=outer west, xshift=0.35cm,
+    width=0.31\textwidth,
+    height=3.8cm,
+    name=c2,
+    axis lines=middle,
+    axis line style={fglight!60, -stealth},
+    tick label style={font=\scriptsize, color=fglight!70},
+    xmin=-0.2, xmax=1.35,
+    ymin=-0.2, ymax=1.35,
+    xtick={1}, ytick={1},
+    grid=major,
+    grid style={dashed, fglight!15},
+    title={\scriptsize\color{fglight!80}2) Non continua in $0$}
+]
+\addplot[very thick, color=accentcyan, domain=0.04:1] {x};
+\addplot[dashed, color=fglight!40] coordinates {(1,0) (1,1) (0,1)};
+\addplot[only marks, mark=*, mark size=1.8pt, color=accentcyan] coordinates {(0,1) (1,1)};
+\addplot[only marks, mark=o, mark size=1.8pt, color=accentcyan] coordinates {(0,0)};
+\end{axis}
+
+% Grafico 3: f(x) = |x| su [-1, 1]
+\begin{axis}[
+    at={(c2.outer east)}, anchor=outer west, xshift=0.35cm,
+    width=0.33\textwidth,
+    height=3.8cm,
+    axis lines=middle,
+    axis line style={fglight!60, -stealth},
+    tick label style={font=\scriptsize, color=fglight!70},
+    xmin=-1.3, xmax=1.35,
+    ymin=-0.2, ymax=1.35,
+    xtick={-1, 1}, ytick={1},
+    grid=major,
+    grid style={dashed, fglight!15},
+    title={\scriptsize\color{fglight!80}3) Non derivabile in $0$}
+]
+\addplot[very thick, color=accentcyan, domain=-1:0] {-x};
+\addplot[very thick, color=accentcyan, domain=0:1] {x};
+\addplot[dashed, color=fglight!40] coordinates {(-1,0) (-1,1) (1,1) (1,0)};
+\addplot[only marks, mark=*, mark size=1.8pt, color=accentcyan] coordinates {(-1,1) (1,1)};
+\addplot[only marks, mark=*, mark size=1.8pt, color=accentpurple] coordinates {(0,0)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\end{esbox}
+
+\section{Teorema di Lagrange, Funzioni a Derivata Nulla e Funzioni Iperboliche}
+
+In questa sezione generalizziamo il Teorema di Rolle enunciando e dimostrando il \textbf{Teorema di Lagrange} (o del valor medio). Da esso ricaviamo la caratterizzazione delle funzioni costanti su un intervallo — ponendo particolare attenzione al ruolo cruciale della connessione del dominio — e introduciamo infine le principali \textbf{funzioni iperboliche} e le loro proprietà geometriche e analitiche.
+
+\subsection{Il Teorema di Lagrange (del valor medio)}
+
+Il Teorema di Lagrange rimuove l'ipotesi $f(a) = f(b)$ del Teorema di Rolle: geometricamente, esso garantisce che, sotto le consuete condizioni di regolarità, esiste almeno un punto interno all'intervallo in cui la retta tangente al grafico di $f$ è parallela alla retta secante passante per gli estremi $\bigl(a, f(a)\bigr)$ e $\bigl(b, f(b)\bigr)$.
+
+\begin{propbox}[Teorema — Teorema di Lagrange (del valor medio)]
+Sia $f \colon [a,b] \to \mathbb{R}$ una funzione tale che:
+\begin{enumerate}
+    \item $f$ è \textbf{continua} sull'intervallo chiuso e limitato $[a,b]$;
+    \item $f$ è \textbf{derivabile} nell'intervallo aperto $\,]a,b[$.
+\end{enumerate}
+Allora esiste almeno un punto $\xi \in \,]a,b[$ tale che:
+\[
+    f'(\xi) = \frac{f(b) - f(a)}{b - a}.
+\]
+\end{propbox}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.78\textwidth,
+    height=4.8cm,
+    axis lines=middle,
+    axis line style={fglight!60, -stealth},
+    tick label style={font=\footnotesize, color=fglight!70},
+    xlabel={$x$}, ylabel={$y$},
+    xlabel style={at={(ticklabel* cs:1)}, anchor=west, color=fglight!80},
+    ylabel style={at={(ticklabel* cs:1)}, anchor=south, color=fglight!80},
+    xmin=0.3, xmax=4.4,
+    ymin=-0.3, ymax=2.8,
+    xtick={0.8, 2.2, 3.6},
+    xticklabels={$a$, $\xi$, $b$},
+    ytick={0.6, 2.0},
+    yticklabels={$f(b)$, $f(a)$},
+    grid=major,
+    grid style={dashed, fglight!15}
+]
+% Funzione f(x) = 2.0 - 0.5*(x - 0.8) - 0.65*sin(deg(2.244*(x - 0.8)))
+\addplot[very thick, color=accentcyan, domain=0.8:3.6, samples=120] {2.0 - 0.5*(x - 0.8) - 0.65*sin(deg(2.244*(x - 0.8)))};
+
+% Retta secante tra (0.8, 2.0) e (3.6, 0.6)
+\addplot[thick, color=accentpurple, domain=0.5:3.9] {2.0 - 0.5*(x - 0.8)} node[pos=0.88, anchor=south west, font=\scriptsize] {Secante};
+
+% Tangente parallela nel punto xi = 2.9 (dove f(2.9) = 2.0 - 1.05 + 0.65 = 1.6)
+\addplot[thick, dashed, color=accentgreen, domain=2.1:3.7] {1.6 - 0.5*(x - 2.9)} node[pos=0.1, anchor=south east, font=\scriptsize] {Tangente in $\xi$};
+
+% Proiezioni e punti
+\addplot[dashed, color=fglight!40] coordinates {(0.8,0) (0.8,2.0) (0,2.0)};
+\addplot[dashed, color=fglight!40] coordinates {(3.6,0) (3.6,0.6) (0,0.6)};
+\addplot[dashed, color=accentgreen!70] coordinates {(2.9,0) (2.9,1.6)};
+
+\addplot[only marks, mark=*, mark size=2.2pt, color=accentcyan] coordinates {(0.8,2.0) (3.6,0.6)};
+\addplot[only marks, mark=*, mark size=2.2pt, color=accentgreen] coordinates {(2.9,1.6)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\noindent\textbf{Dimostrazione.} Scriviamo l'equazione della retta secante passante per i punti $\bigl(a, f(a)\bigr)$ e $\bigl(b, f(b)\bigr)$:
+\[
+    y = f(a) + \frac{f(b) - f(a)}{b - a}(x - a).
+\]
+Definiamo la funzione ausiliaria $g \colon [a,b] \to \mathbb{R}$ come la differenza tra $f(x)$ e l'ordinata della retta secante:
+\[
+    g(x) = f(x) - \left[ f(a) + \frac{f(b) - f(a)}{b - a}(x - a) \right] \quad \forall x \in [a,b].
+\]
+Verifichiamo che $g$ soddisfa tutte le ipotesi del Teorema di Rolle sull'intervallo $[a,b]$:
+\begin{enumerate}
+    \item $g$ è continua in $[a,b]$ e derivabile in $\,]a,b[$, in quanto differenza tra $f$ e un polinomio di primo grado;
+    \item valutando $g$ negli estremi $a$ e $b$, si ottiene:
+    \begin{align*}
+        g(a) &= f(a) - f(a) = 0, \\
+        g(b) &= f(b) - \left[ f(a) + \frac{f(b) - f(a)}{b - a}(b - a) \right] = f(b) - f(a) - \bigl(f(b) - f(a)\bigr) = 0,
+    \end{align*}
+    dunque $g(a) = 0 = g(b)$.
+\end{enumerate}
+Per il \textbf{Teorema di Rolle} applicato a $g$, esiste almeno un punto $\xi \in \,]a,b[$ tale che $g'(\xi) = 0$. Calcolando la derivata di $g$ in $\xi$:
+\[
+    g'(\xi) = f'(\xi) - \frac{f(b) - f(a)}{b - a}.
+\]
+Imponendo $g'(\xi) = 0$, ricaviamo immediatamente:
+\[
+    f'(\xi) = \frac{f(b) - f(a)}{b - a}. \quad \blacksquare
+\]
+
+\subsection{Caratterizzazione delle funzioni costanti su un intervallo}
+
+Un'importante conseguenza del Teorema di Lagrange è la possibilità di riconoscere le funzioni costanti dall'annullarsi della loro derivata prima.
+
+\begin{propbox}[Teorema — Caratterizzazione delle funzioni costanti]
+Sia $f \colon \,]a,b[\, \to \mathbb{R}$ una funzione derivabile nell'intervallo aperto $\,]a,b[$. Allora:
+\[
+    f \text{ è costante in } \,]a,b[ \iff f'(x) = 0 \quad \forall x \in \,]a,b[.
+\]
+\end{propbox}
+
+\noindent\textbf{Dimostrazione.}
+\begin{itemize}
+    \item[$(\Rightarrow)$] Se $f$ è costante in $\,]a,b[$, abbiamo già dimostrato direttamente tramite il rapporto incrementale che $f'(x) = 0$ per ogni $x \in \,]a,b[$.
+    \item[$(\Leftarrow)$] Supponiamo che $f'(x) = 0$ per ogni $x \in \,]a,b[$ e dimostriamo che $f$ assume lo stesso valore in due punti qualsiasi dell'intervallo. Siano $x_0, x_1 \in \,]a,b[$ due punti distinti; senza perdita di generalità, supponiamo $x_0 < x_1$.
+    La restrizione di $f$ all'intervallo chiuso e limitato $[x_0, x_1] \subset \,]a,b[$ è continua su $[x_0, x_1]$ e derivabile su $\,]x_0, x_1[$. Applicando il \textbf{Teorema di Lagrange} a $f$ su $[x_0, x_1]$, esiste un punto $\xi \in \,]x_0, x_1[$ tale che:
+    \[
+        \frac{f(x_1) - f(x_0)}{x_1 - x_0} = f'(\xi).
+    \]
+    Poiché $\xi \in \,]x_0, x_1[\, \subset \,]a,b[$, per ipotesi si ha $f'(\xi) = 0$, da cui segue $f(x_1) - f(x_0) = 0$, ovvero $f(x_1) = f(x_0)$. Data l'arbitrarietà di $x_0$ e $x_1$, $f$ è costante su tutto $\,]a,b[$. $\blacksquare$
+\end{itemize}
+
+\noindent\textbf{Attenzione al dominio: l'ipotesi di intervallo è essenziale.} Il teorema appena dimostrato vale \emph{soltanto} se il dominio in cui $f'(x) = 0$ è un unico intervallo (cioè un insieme connesso). Se il dominio è l'unione disgiunta di due o più intervalli, la funzione può assumere costanti diverse su ciascun intervallo.
+
+\begin{esbox}[Esercizio svolto — Una funzione a derivata nulla non costante sul dominio]
+Studiare la funzione $f \colon \mathbb{R} \setminus \{0\} \to \mathbb{R}$ definita da:
+\[
+    f(x) = \arctan x + \arctan \frac{1}{x}
+\]
+e determinare la sua espressione esplicita su ciascuno degli intervalli che compongono il dominio.
+
+\medskip
+\noindent\textbf{Svolgimento.}
+Il dominio della funzione è $D = \mathbb{R} \setminus \{0\} = \,]-\infty, 0[\, \cup \,]0, +\infty[$, che \textbf{non è un intervallo}. Su $D$, $f$ è derivabile in quanto somma e composizione di funzioni derivabili; calcoliamone la derivata prima per $x \neq 0$ utilizzando la regola della catena:
+\begin{align*}
+    f'(x) &= \frac{1}{1 + x^2} + \frac{1}{1 + \left(\dfrac{1}{x}\right)^2} \cdot \left(-\frac{1}{x^2}\right) \\
+    &= \frac{1}{1 + x^2} - \frac{x^2}{x^2 + 1} \cdot \frac{1}{x^2} = \frac{1}{1 + x^2} - \frac{1}{1 + x^2} = 0.
+\end{align*}
+Sebbene $f'(x) = 0$ per ogni $x \in \mathbb{R} \setminus \{0\}$, non possiamo concludere che $f$ sia costante su tutto $\mathbb{R} \setminus \{0\}$, ma soltanto che è costante separatamente su ciascuno dei due intervalli massimali che lo compongono:
+\begin{enumerate}
+    \item \textbf{Sull'intervallo $\,]0, +\infty[$:} $f$ è costante. Valutandola nel punto $x = 1 \in \,]0, +\infty[$, otteniamo:
+    \[
+        f(1) = \arctan(1) + \arctan(1) = \frac{\pi}{4} + \frac{\pi}{4} = \frac{\pi}{2},
+    \]
+    dunque $\arctan x + \arctan \dfrac{1}{x} = \dfrac{\pi}{2}$ per ogni $x > 0$.
+
+    \item \textbf{Sull'intervallo $\,]-\infty, 0[$:} $f$ è costante. Valutandola nel punto $x = -1 \in \,]-\infty, 0[$, otteniamo:
+    \[
+        f(-1) = \arctan(-1) + \arctan(-1) = -\frac{\pi}{4} - \frac{\pi}{4} = -\frac{\pi}{2},
+    \]
+    dunque $\arctan x + \arctan \dfrac{1}{x} = -\dfrac{\pi}{2}$ per ogni $x < 0$.
+\end{enumerate}
+Ciò conferma che il corollario del Teorema di Lagrange sulle funzioni a derivata nulla è valido esclusivamente all'interno di singoli intervalli.
+\end{esbox}
+
+\subsection{Le funzioni iperboliche}
+
+Introduciamo infine due funzioni elementari costruite mediante combinazioni lineari di esponenziali, che presentano strette analogie algebriche e geometriche con le funzioni goniometriche circolari.
+
+\begin{defbox}[Definizione — Seno iperbolico e coseno iperbolico]
+Per ogni $x \in \mathbb{R}$, si definiscono il \textbf{seno iperbolico} ($\sinh x$) e il \textbf{coseno iperbolico} ($\cosh x$) tramite le seguenti espressioni:
+\[
+    \sinh x = \frac{e^x - e^{-x}}{2}, \qquad \cosh x = \frac{e^x + e^{-x}}{2}.
+\]
+\end{defbox}
+
+Analizziamo le proprietà fondamentali delle due funzioni su tutto $\mathbb{R}$:
+\begin{itemize}
+    \item \textbf{Proprietà di $\sinh x$:}
+    \begin{itemize}
+        \item Si annulla nell'origine: $\sinh 0 = \dfrac{e^0 - e^0}{2} = 0$.
+        \item È una \textbf{funzione dispari}, poiché per ogni $x \in \mathbb{R}$:
+        \[
+            \sinh(-x) = \frac{e^{-x} - e^x}{2} = -\frac{e^x - e^{-x}}{2} = -\sinh x.
+        \]
+        \item È \textbf{strettamente crescente} su tutto $\mathbb{R}$, essendo somma delle due funzioni strettamente crescenti $\frac{1}{2}e^x$ e $-\frac{1}{2}e^{-x}$ (inoltre $D(\sinh x) = \cosh x > 0$ per ogni $x \in \mathbb{R}$).
+        \item Limiti agli estremi: $\lim_{x \to +\infty} \sinh x = +\infty$ e $\lim_{x \to -\infty} \sinh x = -\infty$.
+    \end{itemize}
+
+    \item \textbf{Proprietà di $\cosh x$:}
+    \begin{itemize}
+        \item Vale $1$ nell'origine: $\cosh 0 = \dfrac{1 + 1}{2} = 1$, ed è strettamente positiva ovunque ($\cosh x \ge 1 > 0$ per ogni $x \in \mathbb{R}$).
+        \item È una \textbf{funzione pari}, poiché per ogni $x \in \mathbb{R}$:
+        \[
+            \cosh(-x) = \frac{e^{-x} + e^x}{2} = \cosh x.
+        \]
+        \item Limiti agli estremi: $\lim_{x \to +\infty} \cosh x = +\infty$ e $\lim_{x \to -\infty} \cosh x = +\infty$.
+    \end{itemize}
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+% Grafico di sinh(x)
+\begin{axis}[
+    width=0.46\textwidth,
+    height=4.8cm,
+    name=sinhplot,
+    axis lines=middle,
+    axis line style={fglight!60, -stealth},
+    tick label style={font=\footnotesize, color=fglight!70},
+    xlabel={$x$}, ylabel={$y$},
+    xlabel style={at={(ticklabel* cs:1)}, anchor=west, color=fglight!80},
+    ylabel style={at={(ticklabel* cs:1)}, anchor=south, color=fglight!80},
+    xmin=-2.4, xmax=2.4,
+    ymin=-4.2, ymax=4.2,
+    xtick={-1, 1},
+    ytick={-2, 2},
+    grid=major,
+    grid style={dashed, fglight!15},
+    title={\footnotesize\color{fglight!80}Seno iperbolico $y = \sinh x$}
+]
+\addplot[very thick, color=accentcyan, domain=-2.1:2.1, samples=100] {sinh(x)};
+\addplot[only marks, mark=*, mark size=2pt, color=accentpurple] coordinates {(0,0)};
+\end{axis}
+
+% Grafico di cosh(x)
+\begin{axis}[
+    at={(sinhplot.outer east)}, anchor=outer west, xshift=0.8cm,
+    width=0.46\textwidth,
+    height=4.8cm,
+    axis lines=middle,
+    axis line style={fglight!60, -stealth},
+    tick label style={font=\footnotesize, color=fglight!70},
+    xlabel={$x$}, ylabel={$y$},
+    xlabel style={at={(ticklabel* cs:1)}, anchor=west, color=fglight!80},
+    ylabel style={at={(ticklabel* cs:1)}, anchor=south, color=fglight!80},
+    xmin=-2.4, xmax=2.4,
+    ymin=-0.5, ymax=4.5,
+    xtick={-1, 1},
+    ytick={1, 2, 3},
+    grid=major,
+    grid style={dashed, fglight!15},
+    title={\footnotesize\color{fglight!80}Coseno iperbolico $y = \cosh x$}
+]
+\addplot[very thick, color=accentcyan, domain=-2.1:2.1, samples=100] {cosh(x)};
+\addplot[only marks, mark=*, mark size=2pt, color=accentpurple] coordinates {(0,1)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{propbox}[Proposizione — Identità fondamentale iperbolica]
+Per ogni $x \in \mathbb{R}$, il coseno iperbolico e il seno iperbolico soddisfano l'identità fondamentale:
+\[
+    \cosh^2 x - \sinh^2 x = 1.
+\]
+\end{propbox}
+
+\noindent\textbf{Dimostrazione.} Sviluppando i quadrati tramite la definizione esponenziale:
+\[
+    \cosh^2 x - \sinh^2 x = \left(\frac{e^x + e^{-x}}{2}\right)^2 - \left(\frac{e^x - e^{-x}}{2}\right)^2 = \frac{(e^{2x} + 2 + e^{-2x}) - (e^{2x} - 2 + e^{-2x})}{4} = \frac{4}{4} = 1. \quad \blacksquare
+\]
+
+\noindent\textbf{Significato geometrico (parametrizzazione dell'iperbole equilatera).} Così come il punto $P(\cos t, \sin t)$ descrive al variare di $t \in \mathbb{R}$ la circonferenza unitaria $x^2 + y^2 = 1$, il punto $P(\cosh t, \sinh t)$ descrive al variare di $t \in \mathbb{R}$ il ramo destro ($x > 0$) dell'\textbf{iperbole equilatera} di equazione $x^2 - y^2 = 1$, i cui asintoti sono le bisettrici $y = x$ e $y = -x$.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.68\textwidth,
+    height=5.2cm,
+    axis lines=middle,
+    axis line style={fglight!60, -stealth},
+    tick label style={font=\footnotesize, color=fglight!70},
+    xlabel={$x$}, ylabel={$y$},
+    xlabel style={at={(ticklabel* cs:1)}, anchor=west, color=fglight!80},
+    ylabel style={at={(ticklabel* cs:1)}, anchor=south, color=fglight!80},
+    xmin=-0.5, xmax=3.2,
+    ymin=-2.6, ymax=2.6,
+    xtick={1, 1.543},
+    xticklabels={$1$, $\cosh t$},
+    ytick={1.175},
+    yticklabels={$\sinh t$},
+    grid=major,
+    grid style={dashed, fglight!15}
+]
+% Asintoti y = x e y = -x
+\addplot[dashed, color=fglight!45, domain=-0.3:2.6] {x} node[pos=0.92, anchor=south east, font=\scriptsize] {$y=x$};
+\addplot[dashed, color=fglight!45, domain=-0.3:2.6] {-x} node[pos=0.92, anchor=north east, font=\scriptsize] {$y=-x$};
+
+% Ramo destro dell'iperbole x^2 - y^2 = 1 parametrizzato da (cosh t, sinh t)
+\addplot[very thick, color=accentcyan, domain=-1.55:1.55, samples=100] ({cosh(x)}, {sinh(x)});
+
+% Punto P(cosh t, sinh t) per t = 1 (cosh(1) ≈ 1.543, sinh(1) ≈ 1.175)
+\addplot[dashed, color=accentpurple!80] coordinates {(1.543,0) (1.543,1.175) (0,1.175)};
+\addplot[only marks, mark=*, mark size=2.3pt, color=accentpurple] coordinates {(1.543,1.175)};
+\node[right, font=\footnotesize, color=accentpurple] at (axis cs:1.6,1.175) {$P(\cosh t, \sinh t)$};
+\addplot[only marks, mark=*, mark size=1.8pt, color=accentcyan] coordinates {(1,0)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{esbox}[Esercizio svolto — Verifica del Teorema di Lagrange e derivazione di funzioni iperboliche]
+\begin{enumerate}
+    \item Verificare se la funzione $f(x) = \sqrt{x + 1}$ soddisfa le ipotesi del Teorema di Lagrange sull'intervallo $[0, 3]$ e, in caso affermativo, determinare tutti i punti $\xi \in \,]0, 3[$ garantiti dal teorema.
+    \item Calcolare la derivata prima della funzione $g(x) = \ln(\cosh x)$ (nota come funzione \emph{log-coseno iperbolico}) e della tangente iperbolica $\tanh x = \dfrac{\sinh x}{\cosh x}$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Svolgimento.}
+\begin{enumerate}
+    \item La funzione $f(x) = \sqrt{x + 1}$ è continua su tutto il suo dominio $[-1, +\infty[$ (quindi in particolare su $[0, 3]$) ed è derivabile su $\,]-1, +\infty[$ (quindi in particolare su $\,]0, 3[$) con derivata $f'(x) = \dfrac{1}{2\sqrt{x + 1}}$. Le ipotesi del Teorema di Lagrange sono pertanto soddisfatte. Calcoliamo il rapporto incrementale agli estremi:
+    \[
+        \frac{f(3) - f(0)}{3 - 0} = \frac{\sqrt{4} - \sqrt{1}}{3} = \frac{2 - 1}{3} = \frac{1}{3}.
+    \]
+    Uguagliando $f'(\xi)$ a $\dfrac{1}{3}$ otteniamo l'equazione:
+    \[
+        \frac{1}{2\sqrt{\xi + 1}} = \frac{1}{3} \iff 2\sqrt{\xi + 1} = 3 \iff \xi + 1 = \frac{9}{4} \iff \xi = \frac{5}{4}.
+    \]
+    Poiché $\xi = \dfrac{5}{4} = 1.25 \in \,]0, 3[$, tale punto è l'unico punto interno richiesto dal teorema.
+
+    \item Ricordando che $D(\cosh x) = \sinh x$ e $D(\sinh x) = \cosh x$:
+    \begin{itemize}
+        \item Per $g(x) = \ln(\cosh x)$ (definita e derivabile su tutto $\mathbb{R}$ poiché $\cosh x \ge 1 > 0$), applicando la regola della catena si ha:
+        \[
+            g'(x) = \frac{1}{\cosh x} \cdot \sinh x = \tanh x.
+        \]
+        \item Per $\tanh x = \dfrac{\sinh x}{\cosh x}$, applicando la regola del quoziente e l'identità fondamentale $\cosh^2 x - \sinh^2 x = 1$ si ottiene:
+        \[
+            D(\tanh x) = \frac{\cosh x \cdot \cosh x - \sinh x \cdot \sinh x}{\cosh^2 x} = \frac{\cosh^2 x - \sinh^2 x}{\cosh^2 x} = \frac{1}{\cosh^2 x} = 1 - \tanh^2 x.
+        \]
+    \end{itemize}
+\end{enumerate}
+\end{esbox}
+
+\section{Derivate delle Funzioni Iperboliche, Settore Seno Iperbolico ed Esercizi sui Valori Assoluti}
+
+In questa sezione completiamo lo studio delle funzioni iperboliche ricavando le derivate di $\sinh x$ e $\cosh x$, determinando l'espressione esplicita e la derivata della funzione inversa del seno iperbolico (il \textbf{settore seno iperbolico}) e analizzando diversi esercizi sulle derivate di funzioni logaritmiche a base variabile e funzioni contenenti valori assoluti.
+
+\subsection{Derivate delle funzioni iperboliche e settore seno iperbolico}
+
+Le derivate delle funzioni iperboliche si ottengono immediatamente dalla loro definizione esponenziale e dalla linearità della derivata.
+
+\begin{propbox}[Proposizione — Derivate di $\sinh x$ e $\cosh x$]
+Le funzioni $\sinh x$ e $\cosh x$ sono derivabili su tutto $\mathbb{R}$ e valgono le seguenti formule:
+\[
+    D(\sinh x) = \cosh x, \qquad D(\cosh x) = \sinh x \quad \forall x \in \mathbb{R}.
+\]
+\end{propbox}
+
+\noindent\textbf{Dimostrazione.} Ricordando che $D(e^x) = e^x$ e $D(e^{-x}) = -e^{-x}$, per linearità si ha:
+\begin{align*}
+    D(\sinh x) &= D\!\left(\frac{e^x - e^{-x}}{2}\right) = \frac{1}{2}\bigl(e^x - (-e^{-x})\bigr) = \frac{e^x + e^{-x}}{2} = \cosh x, \\
+    D(\cosh x) &= D\!\left(\frac{e^x + e^{-x}}{2}\right) = \frac{1}{2}\bigl(e^x + (-e^{-x})\bigr) = \frac{e^x - e^{-x}}{2} = \sinh x. \quad \blacksquare
+\end{align*}
+
+Poiché $f(x) = \sinh x$ è continua, strettamente crescente su tutto $\mathbb{R}$ (essendo $f'(x) = \cosh x \ge 1 > 0$) e verifica $\lim_{x \to \pm\infty} \sinh x = \pm\infty$, per il \textbf{Teorema dei valori intermedi} la sua immagine è $f(\mathbb{R}) = \mathbb{R}$. Pertanto $\sinh \colon \mathbb{R} \to \mathbb{R}$ è biiettiva e ammette una funzione inversa definita su tutto $\mathbb{R}$, detta \textbf{settore seno iperbolico}.
+
+\begin{defbox}[Definizione — Settore seno iperbolico ($\operatorname{settsinh} x$)]
+Si definisce \textbf{settore seno iperbolico} (indicato con $\operatorname{settsinh} x$ o $\operatorname{arsinh} x$) la funzione inversa di $\sinh \colon \mathbb{R} \to \mathbb{R}$. Esplicitando la relazione $y = \sinh x$, essa assume la forma logaritmica:
+\[
+    \operatorname{settsinh} \colon \mathbb{R} \to \mathbb{R}, \qquad \operatorname{settsinh} x = \log\!\left(x + \sqrt{x^2 + 1}\right) \quad \forall x \in \mathbb{R}.
+\]
+\end{defbox}
+
+\noindent\textbf{Ricavo dell'espressione esplicita.} Fissato un generico $y \in \mathbb{R}$, cerchiamo l'unico $x \in \mathbb{R}$ tale che:
+\[
+    y = \sinh x = \frac{e^x - e^{-x}}{2} \iff 2y = e^x - \frac{1}{e^x}.
+\]
+Moltiplicando entrambi i membri per $e^x > 0$ e riordinando i termini, otteniamo:
+\[
+    2y e^x = e^{2x} - 1 \iff e^{2x} - 2y e^x - 1 = 0.
+\]
+Effettuando la sostituzione $t = e^x > 0$, si ha l'equazione di secondo grado $t^2 - 2yt - 1 = 0$, le cui radici sono:
+\[
+    t_{1,2} = y \pm \sqrt{y^2 + 1}.
+\]
+Poiché per ogni $y \in \mathbb{R}$ vale $y^2 < y^2 + 1$, estraendo la radice quadrata si ottiene $y \le |y| < \sqrt{y^2 + 1}$, da cui:
+\[
+    y - \sqrt{y^2 + 1} < 0 \quad \text{e} \quad y + \sqrt{y^2 + 1} > 0.
+\]
+Essendo $t = e^x > 0$, l'unica soluzione accettabile è $e^x = y + \sqrt{y^2 + 1}$, da cui prendendo il logaritmo naturale segue $x = \log\!\left(y + \sqrt{y^2 + 1}\right)$.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.72\textwidth,
+    height=4.8cm,
+    axis lines=middle,
+    axis line style={fglight!60, -stealth},
+    tick label style={font=\footnotesize, color=fglight!70},
+    xlabel={$x$}, ylabel={$y$},
+    xlabel style={at={(ticklabel* cs:1)}, anchor=west, color=fglight!80},
+    ylabel style={at={(ticklabel* cs:1)}, anchor=south, color=fglight!80},
+    xmin=-4.5, xmax=4.5,
+    ymin=-2.6, ymax=2.6,
+    xtick={-2, 2},
+    ytick={-1, 1},
+    grid=major,
+    grid style={dashed, fglight!15},
+    title={\footnotesize\color{fglight!80}Grafico di $y = \operatorname{settsinh} x = \log(x + \sqrt{x^2 + 1})$}
+]
+% Grafico di settsinh(x) = ln(x + sqrt(x^2 + 1))
+\addplot[very thick, color=accentcyan, domain=-4.2:4.2, samples=120] {ln(x + sqrt(x^2 + 1))};
+\addplot[only marks, mark=*, mark size=2pt, color=accentpurple] coordinates {(0,0)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{propbox}[Proposizione — Derivata del settore seno iperbolico]
+La funzione $\operatorname{settsinh} x$ è derivabile su tutto $\mathbb{R}$ e risulta:
+\[
+    D(\operatorname{settsinh} x) = \frac{1}{\sqrt{1 + x^2}} \quad \forall x \in \mathbb{R}.
+\]
+\end{propbox}
+
+\noindent\textbf{Dimostrazione.} Possiamo procedere in due modi equivalenti:
+\begin{enumerate}
+    \item \textbf{Derivazione diretta dall'espressione logaritmica:} Per ogni $x \in \mathbb{R}$, applicando la regola della catena a $\log\!\left(x + \sqrt{x^2 + 1}\right)$:
+    \begin{align*}
+        D(\operatorname{settsinh} x) &= \frac{1}{x + \sqrt{x^2 + 1}} \cdot \left(1 + \frac{1}{2\sqrt{x^2 + 1}} \cdot 2x\right) \\
+        &= \frac{1}{x + \sqrt{x^2 + 1}} \cdot \frac{\sqrt{x^2 + 1} + x}{\sqrt{1 + x^2}} = \frac{1}{\sqrt{1 + x^2}}.
+    \end{align*}
+
+    \item \textbf{Tramite il teorema di derivazione della funzione inversa:} Poiché $D(\sinh t) = \cosh t \neq 0$ e dall'identità fondamentale $\cosh^2 t - \sinh^2 t = 1$ si ricava $\cosh t = \sqrt{1 + \sinh^2 t}$ (essendo $\cosh t > 0$), si ha per ogni $x \in \mathbb{R}$:
+    \[
+        D(\operatorname{settsinh} x) = \frac{1}{\cosh(\operatorname{settsinh} x)} = \frac{1}{\sqrt{1 + \sinh^2(\operatorname{settsinh} x)}} = \frac{1}{\sqrt{1 + x^2}}. \quad \blacksquare
+    \]
+\end{enumerate}
+
+\subsection{Esercizi svolti: logaritmi in base variabile e valori assoluti}
+
+Applichiamo ora le regole di derivazione e il calcolo diretto del rapporto incrementale ad alcuni esercizi significativi.
+
+\begin{esbox}[Esercizio svolto — Derivata di un logaritmo con base variabile]
+Determinare il dominio di derivabilità e la derivata prima della funzione:
+\[
+    f(x) = \log_x 3.
+\]
+
+\medskip
+\noindent\textbf{Svolgimento.}
+Affinché il logaritmo sia ben definito, la base $x$ deve essere strettamente positiva e diversa da $1$, dunque il dominio di $f$ è $D = \,]0, 1[\, \cup \,]1, +\infty[$.
+Ricordiamo la formula del cambiamento di base dei logaritmi: $\log_a c = \log_a b \cdot \log_b c$. Ponendo $a = 3$, $b = x$ e $c = 3$, si ottiene $\log_3 x \cdot \log_x 3 = \log_3 3 = 1$, da cui possiamo riscrivere la funzione come:
+\[
+    f(x) = \log_x 3 = \frac{1}{\log_3 x} \quad \forall x \in \,]0, 1[\, \cup \,]1, +\infty[.
+\]
+Su tutto il dominio $D$, il denominatore $\log_3 x$ è derivabile con $D(\log_3 x) = \dfrac{1}{x \log 3}$ e non si annulla mai (poiché $\log_3 x = 0 \iff x = 1 \notin D$). Applicando la regola di derivazione del reciproco, concludiamo che $f$ è derivabile in $\,]0, 1[\, \cup \,]1, +\infty[$ e risulta:
+\[
+    f'(x) = D\!\left(\frac{1}{\log_3 x}\right) = -\frac{1}{(\log_3 x)^2} \cdot \frac{1}{x \log 3} = -\frac{1}{x \log 3 \, (\log_3 x)^2}.
+\]
+\end{esbox}
+
+\begin{esbox}[Esercizio svolto — Studio di derivabilità di $f(x) = x|x^2 - 1|$]
+Studiare la derivabilità su tutto $\mathbb{R}$ della funzione:
+\[
+    f(x) = x|x^2 - 1|.
+\]
+
+\medskip
+\noindent\textbf{Svolgimento.}
+Ricordiamo che $D(|t|) = \dfrac{|t|}{t}$ per ogni $t \neq 0$. Nel nostro caso, l'argomento del valore assoluto si annulla per:
+\[
+    x^2 - 1 = 0 \iff x = \pm 1.
+\]
+Pertanto, per ogni $x \in \mathbb{R} \setminus \{-1, 1\}$, la funzione $f$ è derivabile per le regole algebriche del prodotto e della funzione composta:
+\begin{align*}
+    f'(x) &= 1 \cdot |x^2 - 1| + x \cdot \frac{|x^2 - 1|}{x^2 - 1} \cdot 2x \\
+    &= |x^2 - 1|\left(1 + \frac{2x^2}{x^2 - 1}\right) = |x^2 - 1|\,\frac{3x^2 - 1}{x^2 - 1} \quad \forall x \in \mathbb{R} \setminus \{-1, 1\}.
+\end{align*}
+Resta da studiare la derivabilità nei punti critici $x_0 = 1$ e $x_0 = -1$:
+\begin{itemize}
+    \item \textbf{Analisi in $x_0 = 1$:} Poiché $f(1) = 0$, scriviamo il rapporto incrementale per $x \neq 1$ scomponendo $|x^2 - 1| = |x + 1|\,|x - 1|$:
+    \[
+        \frac{f(x) - f(1)}{x - 1} = \frac{x|x^2 - 1|}{x - 1} = x|x + 1| \cdot \frac{|x - 1|}{x - 1}.
+    \]
+    Poiché il fattore $\dfrac{|x - 1|}{x - 1}$ vale $+1$ per $x > 1$ e $-1$ per $x < 1$, calcolando i limiti destro e sinistro otteniamo:
+    \begin{align*}
+        \lim_{x \to 1^+} \frac{f(x) - f(1)}{x - 1} &= \lim_{x \to 1^+} x|x + 1| \cdot (+1) = 1 \cdot 2 = 2, \\
+        \lim_{x \to 1^-} \frac{f(x) - f(1)}{x - 1} &= \lim_{x \to 1^-} x|x + 1| \cdot (-1) = 1 \cdot 2 \cdot (-1) = -2.
+    \end{align*}
+    Essendo i due limiti diversi ($2 \neq -2$), $f$ \textbf{non è derivabile in $x_0 = 1$} (ha un punto angoloso).
+
+    \item \textbf{Analisi in $x_0 = -1$:} Analogamente, essendo $f(-1) = 0$, per $x \neq -1$ il rapporto incrementale è:
+    \[
+        \frac{f(x) - f(-1)}{x - (-1)} = \frac{x|x^2 - 1|}{x + 1} = x|x - 1| \cdot \frac{|x + 1|}{x + 1}.
+    \]
+    Passando ai limiti per $x \to -1^+$ e $x \to -1^-$:
+    \begin{align*}
+        \lim_{x \to -1^+} \frac{f(x) - f(-1)}{x + 1} &= (-1)|-2| \cdot (+1) = -2, \\
+        \lim_{x \to -1^-} \frac{f(x) - f(-1)}{x + 1} &= (-1)|-2| \cdot (-1) = 2.
+    \end{align*}
+    Anche in $x_0 = -1$ i limiti destro e sinistro sono distinti ($-2 \neq 2$), per cui $f$ \textbf{non è derivabile in $x_0 = -1$}.
+\end{itemize}
+In conclusione, $f(x) = x|x^2 - 1|$ è derivabile su $\mathbb{R} \setminus \{-1, 1\}$.
+\end{esbox}
+
+\begin{esbox}[Esercizio svolto — Regolarizzazione di un punto angoloso: $f(x) = (x - 1)|x^2 - 1|$]
+Studiare la derivabilità nel punto $x_0 = 1$ della funzione:
+\[
+    f(x) = (x - 1)|x^2 - 1|.
+\]
+
+\medskip
+\noindent\textbf{Svolgimento.}
+Rispetto all'esercizio precedente, il fattore $x$ è stato sostituito con $(x - 1)$, che si annulla proprio nel punto critico $x_0 = 1$. Essendo $f(1) = 0$, calcoliamo direttamente il limite del rapporto incrementale in $x_0 = 1$ per $x \neq 1$:
+\[
+    \frac{f(x) - f(1)}{x - 1} = \frac{(x - 1)|x^2 - 1|}{x - 1} = |x^2 - 1| \xrightarrow{x \to 1} 0.
+\]
+Il limite bilatero esiste finito e vale $0$: la presenza del fattore $(x - 1)$ annulla il salto tra derivata destra e sinistra in $x_0 = 1$. Pertanto $f$ \textbf{è derivabile in $x_0 = 1$} con $f'(1) = 0$ (mentre rimane non derivabile in $x_0 = -1$, dove non c'è alcun fattore a regolarizzare il modulo).
+\end{esbox}
+
+\section{Derivate Successive, Classi di Regolarità $C^n$ e Criteri di Derivabilità}
+
+In questa sezione generalizziamo il concetto di derivazione introducendo le \textbf{derivate di ordine superiore}, definendo formalmente le funzioni $n$-volte derivabili e le classi di regolarità $C^n$, e illustrando come il limite della funzione derivata consenta di stabilire rapidamente la derivabilità (o la non derivabilità) nei punti critici senza dover ricalcolare il rapporto incrementale.
+
+\subsection{Definizione di derivate di ordine superiore}
+
+Sia $f \colon \,]a,b[\, \to \mathbb{R}$ una funzione derivabile in ogni punto dell'intervallo aperto $\,]a,b[$. Associando a ciascun punto $x \in \,]a,b[$ il valore $f'(x) \in \mathbb{R}$, resta ben definita una nuova funzione reale di variabile reale, detta \textbf{funzione derivata prima}:
+\[
+    f' \colon \,]a,b[\, \to \mathbb{R}, \qquad x \longmapsto f'(x).
+\]
+Se la funzione $f'$ risulta a sua volta derivabile in un punto $x \in \,]a,b[$, ovvero se esiste finito il limite del suo rapporto incrementale:
+\[
+    \lim_{h \to 0} \frac{f'(x+h) - f'(x)}{h} \in \mathbb{R},
+\]
+tale valore prende il nome di \textbf{derivata seconda} di $f$ in $x$ e si indica equivalentemente con una delle seguenti notazioni:
+\[
+    (f')'(x), \qquad f''(x), \qquad D^2 f(x), \qquad \frac{d^2}{dx^2} f(x).
+\]
+Iterando ricorsivamente questo procedimento, si definiscono le derivate di ordine arbitrario.
+
+\begin{defbox}[Definizione — Funzioni $n$-volte derivabili e derivate successive]
+Sia $f \colon \,]a,b[\, \to \mathbb{R}$ e sia $n \in \mathbb{N}^+$ ($n \ge 1$). Posto per convenzione $f^{(0)} = f$, si dice che $f$ è \textbf{$n$-volte derivabile} in $\,]a,b[$ se per ogni $k = 1, \dots, n$ la funzione derivata $(k-1)$-esima $f^{(k-1)} \colon \,]a,b[\, \to \mathbb{R}$ è derivabile in ogni punto $x \in \,]a,b[$. La \textbf{derivata $k$-esima} di $f$ in $x$ è definita ricorsivamente da:
+\[
+    f^{(k)}(x) = \bigl(f^{(k-1)}\bigr)'(x) = \lim_{h \to 0} \frac{f^{(k-1)}(x+h) - f^{(k-1)}(x)}{h}.
+\]
+In particolare, per $k = 1, 2, 3, 4$, le derivate successive si denotano solitamente con $f', f'', f^{(3)}, f^{(4)}, \dots, f^{(n)}$. Si dice infine che $f \in C^n(\,]a,b[\,)$ se $f$ è $n$-volte derivabile su $\,]a,b[$ e la derivata $n$-esima $f^{(n)}$ è \textbf{continua} su $\,]a,b[$.
+\end{defbox}
+
+\subsection{Esempi fondamentali di derivate successive}
+
+Calcoliamo le derivate di ordine superiore per alcune classi notevoli di funzioni.
+
+\begin{esbox}[Esercizio svolto — Derivate successive dei polinomi]
+Determinare le derivate successive di:
+\begin{enumerate}
+    \item $f(x) = x^2 + 3x + 2$ per $x \in \mathbb{R}$;
+    \item un generico polinomio $P(x) = \displaystyle\sum_{k=0}^{n} a_k x^k$ di grado $n \in \mathbb{N}$ ($a_n \neq 0$).
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Svolgimento.}
+\begin{enumerate}
+    \item Per il polinomio di secondo grado $f(x) = x^2 + 3x + 2$ ($x \in \mathbb{R}$), derivando termine a termine si ottiene:
+    \[
+        f'(x) = 2x + 3, \qquad f''(x) = 2, \qquad f'''(x) = 0.
+    \]
+    Di conseguenza, $f$ ammette derivate di ogni ordine su $\mathbb{R}$ e risulta $f^{(m)}(x) = 0$ per ogni $m \ge 3$.
+
+    \item Più in generale, dato un polinomio $P(x) = \sum_{k=0}^{n} a_k x^k$ di grado $n$ su $\mathbb{R}$, ciascuna derivazione abbassa di $1$ il grado dei singoli monomi ed elimina il termine costante:
+    \begin{align*}
+        P'(x) &= \sum_{k=1}^{n} k a_k x^{k-1}, \\
+        P''(x) &= \sum_{k=2}^{n} k(k-1) a_k x^{k-2}, \\
+        &\;\;\vdots \\
+        P^{(n)}(x) &= n(n-1)\cdots 2 \cdot 1 \, a_n = n!\, a_n.
+    \end{align*}
+    Poiché la derivata $n$-esima è la costante $n!\, a_n$, tutte le derivate di ordine strettamente maggiore di $n$ sono identicamente nulle:
+    \[
+        P^{(h)}(x) = 0 \quad \forall h \ge n + 1, \;\forall x \in \mathbb{R}.
+    \]
+\end{enumerate}
+\end{esbox}
+
+\begin{esbox}[Esercizio svolto — Derivate successive della funzione esponenziale $f(x) = b^x$]
+Sia $b > 0$ ($b \neq 1$). Dimostrare per induzione matematica che per ogni $n \in \mathbb{N}^+$ e per ogni $x \in \mathbb{R}$ la derivata $n$-esima di $f(x) = b^x$ è data da:
+\[
+    f^{(n)}(x) = b^x (\log b)^n.
+\]
+
+\medskip
+\noindent\textbf{Svolgimento.}
+Calcolando le prime due derivate si osserva lo schema generale: $f'(x) = b^x \log b$ e $f''(x) = b^x (\log b)^2$. Procediamo per \textbf{induzione su $n \in \mathbb{N}^+$}:
+\begin{itemize}
+    \item \textbf{Base dell'induzione ($n = 1$):} Per $n = 1$ la formula restituisce $f'(x) = b^x (\log b)^1 = b^x \log b$, che è vera.
+    \item \textbf{Passo induttivo:} Supponiamo la formula vera per un fissato $n \ge 1$ (\emph{ipotesi induttiva}), ossia $f^{(n)}(x) = b^x (\log b)^n$ per ogni $x \in \mathbb{R}$. Poiché $f^{(n)}$ è il prodotto della costante $(\log b)^n$ per la funzione derivabile $b^x$, essa è derivabile su tutto $\mathbb{R}$ e risulta:
+    \[
+        f^{(n+1)}(x) = \bigl(f^{(n)}\bigr)'(x) = D\!\left[b^x (\log b)^n\right] = \bigl(b^x \log b\bigr)(\log b)^n = b^x (\log b)^{n+1}.
+    \]
+\end{itemize}
+La tesi è così dimostrata per ogni $n \in \mathbb{N}^+$. In particolare, per $b = e$ ($\log e = 1$) si ha $\bigl(e^x\bigr)^{(n)} = e^x$ per ogni $n \in \mathbb{N}$.
+\end{esbox}
+
+\begin{esbox}[Esercizio svolto — Una funzione derivabile una sola volta: $f(x) = x|x|$]
+Studiare l'ordine massimo di derivabilità su $\mathbb{R}$ della funzione:
+\[
+    f(x) = x|x|.
+\]
+
+\medskip
+\noindent\textbf{Svolgimento.}
+Per $x \neq 0$, derivando il prodotto $x|x|$ tramite la regola $D(|x|) = \dfrac{|x|}{x}$ otteniamo:
+\[
+    f'(x) = 1 \cdot |x| + x \cdot \frac{|x|}{x} = |x| + |x| = 2|x| \quad \forall x \neq 0.
+\]
+In $x_0 = 0$, calcolando il limite del rapporto incrementale (con $f(0) = 0$) si ha:
+\[
+    \lim_{x \to 0} \frac{f(x) - f(0)}{x} = \lim_{x \to 0} \frac{x|x|}{x} = \lim_{x \to 0} |x| = 0 \implies f'(0) = 0.
+\]
+Poiché $2|0| = 0 = f'(0)$, la funzione derivata prima è espressa su tutto $\mathbb{R}$ dalla formula unica:
+\[
+    f'(x) = 2|x| \quad \forall x \in \mathbb{R}.
+\]
+Osserviamo che $f'(x) = 2|x|$ è continua su tutto $\mathbb{R}$ (quindi $f \in C^1(\mathbb{R})$) ed è derivabile per $x \neq 0$ con derivata seconda:
+\[
+    f''(x) = 2\,\frac{|x|}{x} = \begin{cases} 2 & \text{se } x > 0, \\ -2 & \text{se } x < 0. \end{cases}
+\]
+Tuttavia, in $x_0 = 0$ la funzione $f'(x) = 2|x|$ presenta un punto angoloso, per cui $\nexists \,(f')'(0)$. In conclusione, $f$ è derivabile su tutto $\mathbb{R}$ ma è \textbf{due volte derivabile soltanto su $\mathbb{R} \setminus \{0\}$}.
+\end{esbox}
+
+\subsection{Criterio del limite della derivata (conseguenza del Teorema di Lagrange)}
+
+Nei punti in cui una funzione continua presenta un'espressione critica (come il punto di raccordo di una funzione a tratti o lo zero di un valore assoluto), spesso è molto più rapido studiare il comportamento di $f'(x)$ in un intorno del punto piuttosto che calcolare direttamente il limite del rapporto incrementale. Il seguente risultato — conseguenza diretta del Teorema di Lagrange — formalizza questo principio.
+
+\begin{propbox}[Teorema — Criterio di derivabilità tramite il limite della derivata]
+Sia $f \colon \,]a,b[\, \to \mathbb{R}$ una funzione \textbf{continua} in un punto $x_0 \in \,]a,b[$ e derivabile in $\,]a,b[\, \setminus \{x_0\}$.
+\begin{enumerate}
+    \item Se esiste finito $\lim_{x \to x_0} f'(x) = \ell \in \mathbb{R}$, allora $f$ è \textbf{derivabile} in $x_0$, si ha $f'(x_0) = \ell$, e la funzione derivata $f'$ è continua in $x_0$.
+    \item Se esiste infinito $\lim_{x \to x_0} f'(x) = \pm\infty$, allora anche il limite del rapporto incrementale vale $\lim_{x \to x_0} \dfrac{f(x) - f(x_0)}{x - x_0} = \pm\infty$, pertanto $f$ \textbf{non è derivabile} in $x_0$ (presenta una tangente verticale).
+\end{enumerate}
+\emph{(Nota: analoghe conclusioni valgono separatamente per i limiti destro e sinistro $x \to x_0^+$ e $x \to x_0^-$).}
+\end{propbox}
+
+\begin{esbox}[Esercizio svolto — Studio delle classi $C^1$ e $C^2$ di $f(x) = |x|^{3/2}$]
+Determinare le classi di regolarità $C^1$ e $C^2$ della funzione $f \colon \mathbb{R} \to \mathbb{R}$ definita da:
+\[
+    f(x) = |x|^{3/2}.
+\]
+
+\medskip
+\noindent\textbf{Svolgimento.}
+La funzione $f$ è continua su tutto $\mathbb{R}$ in quanto composizione di funzioni continue.
+\begin{enumerate}
+    \item \textbf{Studio della derivata prima:} Per ogni $x \neq 0$, derivando $|x|^{3/2}$ tramite la regola della catena si ha:
+    \[
+        f'(x) = \frac{3}{2}|x|^{\frac{3}{2} - 1} \cdot \frac{|x|}{x} = \frac{3}{2}\sqrt{|x|}\,\frac{|x|}{x} \quad \forall x \neq 0.
+    \]
+    Calcoliamo il limite di $f'(x)$ per $x \to 0$: poiché $\sqrt{|x|} \to 0$ e il fattore $\dfrac{|x|}{x}$ è limitato (vale $\pm 1$), il loro prodotto tende a zero:
+    \[
+        \lim_{x \to 0} f'(x) = \lim_{x \to 0} \frac{3}{2}\sqrt{|x|} \cdot \frac{|x|}{x} = 0.
+    \]
+    Per la conseguenza del Teorema di Lagrange, $f$ è derivabile anche in $x_0 = 0$ con $f'(0) = 0$ e $f'$ risulta continua in $0$ (poiché $\lim_{x \to 0} f'(x) = 0 = f'(0)$). Pertanto, $f \in C^1(\mathbb{R})$.
+
+    \item \textbf{Studio della derivata seconda:} Esplicitando $f'(x)$ a tratti su tutto $\mathbb{R}$:
+    \[
+        f'(x) = \begin{cases} \dfrac{3}{2}\sqrt{x} & \text{se } x \ge 0, \\[6pt] -\dfrac{3}{2}\sqrt{-x} & \text{se } x < 0. \end{cases}
+    \]
+    Per $x \neq 0$, derivando ciascuno dei due rami otteniamo:
+    \[
+        f''(x) = \begin{cases} \dfrac{3}{2} \cdot \dfrac{1}{2\sqrt{x}} = \dfrac{3}{4\sqrt{x}} & \text{se } x > 0, \\[8pt] -\dfrac{3}{2} \cdot \dfrac{-1}{2\sqrt{-x}} = \dfrac{3}{4\sqrt{-x}} & \text{se } x < 0, \end{cases}
+    \]
+    che si sintetizza nell'unica espressione:
+    \[
+        f''(x) = \frac{3}{4\sqrt{|x|}} \quad \forall x \neq 0.
+    \]
+    Passando al limite per $x \to 0$, si trova:
+    \[
+        \lim_{x \to 0} f''(x) = \lim_{x \to 0} \frac{3}{4\sqrt{|x|}} = +\infty.
+    \]
+    Sempre grazie alla conseguenza del Teorema di Lagrange (senza dover ricalcolare il rapporto incrementale di $f'$ in $0$), segue che $\lim_{x \to 0} \dfrac{f'(x) - f'(0)}{x} = +\infty$, dunque $f'$ \textbf{non è derivabile in $0$}. Concludiamo che $f \in C^1(\mathbb{R})$ e $f \in C^2(\mathbb{R} \setminus \{0\})$.
+\end{enumerate}
+\end{esbox}
+
+\section{Classi di Regolarità $C^k$ e $C^\infty$, Criterio di Derivabilità e Funzioni Derivabili con Derivata Discontinua}
+
+In questa sezione formalizziamo gli spazi delle funzioni regolari di classe $C^k$ e $C^\infty$ su intervalli aperti e chiusi, dimostriamo rigorosamente il \textbf{teorema sul limite della derivata} come conseguenza diretta del Teorema di Lagrange e studiamo una celebre famiglia di funzioni oscillanti che mostra come il criterio del limite della derivata costituisca una condizione \emph{sufficiente} ma \textbf{non necessaria} per la derivabilità: esistono infatti funzioni derivabili ovunque la cui funzione derivata prima non è continua.
+
+\subsection{Le classi di regolarità $C^k$ e $C^\infty$}
+
+Classifichiamo le funzioni reali di variabile reale in base al numero di derivate continue che esse ammettono sul proprio dominio.
+
+\begin{defbox}[Definizione — Funzioni di classe $C^k$ e $C^\infty$ su un intervallo]
+Sia $f \colon \,]a,b[\, \to \mathbb{R}$ una funzione definita su un intervallo aperto.
+\begin{itemize}
+    \item Si dice che $f$ è di \textbf{classe $C^0$} (o semplicemente di classe $C$), e si scrive $f \in C^0(\,]a,b[\,)$, se $f$ è \textbf{continua} in $\,]a,b[$.
+    \item Dato $k \in \mathbb{N}^+$ ($k \ge 1$), si dice che $f$ è di \textbf{classe $C^k$}, e si scrive $f \in C^k(\,]a,b[\,)$, se $f$ è dotata di derivate fino all'ordine $k$ in $\,]a,b[$ e la derivata $k$-esima $f^{(k)}$ è \textbf{continua} in $\,]a,b[$ (di conseguenza, tutte le derivate $f, f', \dots, f^{(k)}$ sono continue su $\,]a,b[$).
+    \item Si dice che $f$ è di \textbf{classe $C^\infty$} (o \emph{liscia}), e si scrive $f \in C^\infty(\,]a,b[\,)$, se $f$ è dotata di derivate di qualsiasi ordine in $\,]a,b[$:
+    \[
+        C^\infty(\,]a,b[\,) = \bigcap_{k=0}^{\infty} C^k(\,]a,b[\,).
+    \]
+\end{itemize}
+Infine, dati $a, b \in \mathbb{R}$ con $a < b$, si dice che $f \colon [a,b] \to \mathbb{R}$ appartiene a \textbf{$C^k([a,b])$} se $f \in C^k(\,]a,b[\,)$ e negli estremi $a$ e $b$ esistono finite e continue le rispettive derivate destra e sinistra fino all'ordine $k$.
+\end{defbox}
+
+\noindent\textbf{Esempi immediati.} Ogni polinomio $P(x)$ e ogni funzione esponenziale $b^x$ ($b > 0$) sono derivabili infinite volte con derivate continue su tutto $\mathbb{R}$, pertanto $P \in C^\infty(\mathbb{R})$ e $b^x \in C^\infty(\mathbb{R})$.
+
+\subsection{Dimostrazione del criterio di derivabilità tramite il limite della derivata}
+
+Abbiamo già osservato come il comportamento della funzione derivata $f'(x)$ in un intorno bucato di un punto $x_0$ permetta di dedurre la derivabilità di $f$ in $x_0$ senza dover calcolare direttamente il limite del rapporto incrementale. Enunciamo e dimostriamo formalmente questo risultato.
+
+\begin{propbox}[Teorema — Derivabilità in un punto tramite il limite della derivata]
+Sia $f \colon [a,b] \to \mathbb{R}$ una funzione \textbf{continua} in $[a,b]$ e derivabile in $\,]a,b[\, \setminus \{x_0\}$, dove $x_0 \in \,]a,b[$.
+Se esiste finito il limite della derivata prima:
+\[
+    \lim_{x \to x_0} f'(x) = \alpha \in \mathbb{R},
+\]
+allora $f$ è \textbf{derivabile} anche in $x_0$ e si ha $f'(x_0) = \alpha$ (in particolare, $f'$ è continua in $x_0$).
+\end{propbox}
+
+\noindent\textbf{Dimostrazione.} Per provare che $f$ è derivabile in $x_0$ con derivata $\alpha$, dobbiamo dimostrare che $\lim_{x \to x_0} \dfrac{f(x) - f(x_0)}{x - x_0} = \alpha$.
+Fissato un generico punto $x \in [a,b]$ con $x \neq x_0$, consideriamo l'intervallo chiuso di estremi $x$ e $x_0$ (ossia $[x, x_0]$ se $x < x_0$, oppure $[x_0, x]$ se $x > x_0$). Su tale intervallo chiuso la funzione $f$ è continua (per ipotesi) e nei suoi punti interni è derivabile (poiché $x_0$ ne è un estremo).
+
+Applicando il \textbf{Teorema di Lagrange} sull'intervallo chiuso di estremi $x$ e $x_0$, esiste almeno un punto $\xi_x$ strettamente compreso tra $x$ e $x_0$ (che dipende dalla scelta di $x$) tale che:
+\[
+    \frac{f(x) - f(x_0)}{x - x_0} = f'(\xi_x).
+\]
+Quando $x \to x_0$, poiché $\xi_x$ è compreso tra $x$ e $x_0$ (ad esempio $x < \xi_x < x_0$ se $x < x_0$, oppure $x_0 < \xi_x < x$ se $x > x_0$) e $\xi_x \neq x_0$, per il \textbf{teorema del confronto (dei due carabinieri)} si ha che $\xi_x \to x_0$ con $\xi_x \neq x_0$.
+Sfruttando l'ipotesi $\lim_{t \to x_0} f'(t) = \alpha$ e il teorema sul limite della funzione composta, otteniamo:
+\[
+    \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} = \lim_{x \to x_0} f'(\xi_x) = \alpha.
+\]
+Il limite del rapporto incrementale esiste dunque finito e vale $\alpha$, il che prova che $f$ è derivabile in $x_0$ e che $f'(x_0) = \alpha$. $\blacksquare$
+
+\begin{center}
+\begin{tikzpicture}
+% Retta reale e posizionamento dei punti a < x < xi_x < x_0 < b
+\draw[thick, fglight!70, -stealth] (0,0) -- (10.5,0);
+
+% Tacche e labels
+\draw[thick, fglight!80] (1, 0.12) -- (1, -0.12) node[below, font=\footnotesize] {$a$};
+\draw[thick, accentcyan] (3.2, 0.15) -- (3.2, -0.15) node[below, font=\footnotesize, color=accentcyan] {$x$};
+\draw[thick, accentpurple] (4.4, 0.15) -- (4.4, -0.15) node[below, font=\footnotesize, color=accentpurple] {$\xi_x$};
+\draw[thick, accentgreen] (5.6, 0.18) -- (5.6, -0.18) node[below, font=\footnotesize, color=accentgreen] {$x_0$};
+\draw[thick, fglight!80] (9.2, 0.12) -- (9.2, -0.12) node[below, font=\footnotesize] {$b$};
+
+% Segmento evidenziato tra x e x_0
+\draw[very thick, accentcyan!60] (3.2, 0) -- (5.6, 0);
+
+% Frecce di convergenza
+\draw[->, bend left=35, thick, accentcyan] (3.2, 0.25) to node[above, font=\scriptsize] {$x \to x_0^-$} (5.45, 0.25);
+\draw[->, bend right=35, thick, accentpurple] (4.4, -0.55) to node[below, font=\scriptsize] {$\xi_x \to x_0$} (5.6, -0.55);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Derivabilità senza continuità della derivata: un controesempio fondamentale}
+
+Il teorema precedente fornisce una condizione \textbf{sufficiente} affinché $f$ sia derivabile in $x_0$, ma \textbf{non necessaria}: se $\lim_{x \to x_0} f'(x)$ \emph{non esiste} (per oscillazione), la funzione $f$ può comunque essere derivabile in $x_0$, purché la sua derivata prima risulti \textbf{discontinua} in $x_0$. L'esercizio seguente illustra questo fenomeno in modo completo al variare di un parametro reale $\alpha > 0$.
+
+\begin{esbox}[Esercizio svolto — Studio completo di $f(x) = x^\alpha \sin\frac{1}{x}$ per $\alpha > 0$]
+Sia $\alpha > 0$ un parametro reale. Consideriamo la funzione $f \colon [0, +\infty[\, \to \mathbb{R}$ (analogamente estendibile per parità o disparità a tutto $\mathbb{R}$) definita da:
+\[
+    f(x) = \begin{cases} x^\alpha \sin\dfrac{1}{x} & \text{se } x > 0, \\[6pt] 0 & \text{se } x = 0. \end{cases}
+\]
+Studiare, al variare di $\alpha > 0$, la continuità di $f$, la derivabilità in $x_0 = 0$ e l'appartenenza alla classe $C^1([0, +\infty[)$ (o $C^1(\mathbb{R})$).
+
+\medskip
+\noindent\textbf{Svolgimento.}
+\begin{enumerate}
+    \item \textbf{Continuità in $x_0 = 0$ (per ogni $\alpha > 0$):} Per $x > 0$ la funzione è continua in quanto prodotto e composizione di funzioni continue. Nell'origine, poiché $\alpha > 0$ implica $x^\alpha \to 0$ per $x \to 0^+$ e la funzione $\sin\frac{1}{x}$ è limitata ($|\sin\frac{1}{x}| \le 1$), si ha:
+    \[
+        \lim_{x \to 0^+} f(x) = \lim_{x \to 0^+} x^\alpha \sin\frac{1}{x} = 0 = f(0).
+    \]
+    Pertanto $f$ è continua su tutto il dominio ($f \in C^0$) per ogni $\alpha > 0$.
+
+    \item \textbf{Calcolo della derivata prima per $x > 0$:} Per ogni $x > 0$, applicando le regole del prodotto e della funzione composta otteniamo:
+    \[
+        f'(x) = \alpha x^{\alpha - 1} \sin\frac{1}{x} + x^\alpha \cos\frac{1}{x} \cdot \left(-\frac{1}{x^2}\right) = \alpha x^{\alpha - 1} \sin\frac{1}{x} - x^{\alpha - 2} \cos\frac{1}{x}.
+    \]
+
+    \item \textbf{Analisi del limite $\lim_{x \to 0^+} f'(x)$ (criterio di Lagrange):} Studiamo il comportamento dei due addendi di $f'(x)$ per $x \to 0^+$:
+    \begin{itemize}
+        \item Se $\alpha > 2$, entrambi gli esponenti $\alpha - 1 > 1$ e $\alpha - 2 > 0$ sono strettamente positivi, quindi sia $x^{\alpha - 1} \sin\frac{1}{x} \to 0$ sia $x^{\alpha - 2} \cos\frac{1}{x} \to 0$. Ne segue $\lim_{x \to 0^+} f'(x) = 0$. Per il teorema sul limite della derivata, $f$ è derivabile in $0$ con $f'(0) = 0$ e $f'$ è continua in $0$, dunque \textbf{$f \in C^1$ per ogni $\alpha > 2$}.
+        \item Se $\alpha = 2$, si ha $f'(x) = 2x \sin\frac{1}{x} - \cos\frac{1}{x}$: mentre $2x\sin\frac{1}{x} \to 0$, il termine $\cos\frac{1}{x}$ oscilla tra $-1$ e $1$, per cui \textbf{$\nexists \lim_{x \to 0^+} f'(x)$}.
+        \item Se $0 < \alpha < 2$, l'esponente $\alpha - 2$ è negativo ($x^{\alpha - 2} \to +\infty$), sicché il termine $x^{\alpha - 2} \cos\frac{1}{x}$ oscilla con ampiezza divergente e nuovamente \textbf{$\nexists \lim_{x \to 0^+} f'(x)$}.
+    \end{itemize}
+
+    \item \textbf{Calcolo diretto del rapporto incrementale in $x_0 = 0$ per $\alpha \le 2$:} Poiché per $\alpha \le 2$ il limite di $f'(x)$ non esiste, il criterio di Lagrange non è applicabile e dobbiamo ricorrere direttamente alla definizione di derivata in $x_0 = 0$:
+    \[
+        \frac{f(x) - f(0)}{x - 0} = \frac{x^\alpha \sin\dfrac{1}{x}}{x} = x^{\alpha - 1} \sin\frac{1}{x} \quad (x > 0).
+    \]
+    Passando al limite per $x \to 0^+$:
+    \begin{itemize}
+        \item Se \textbf{$1 < \alpha \le 2$} (in particolare per $\alpha = 2$), l'esponente $\alpha - 1$ è strettamente positivo, dunque $x^{\alpha - 1} \to 0$; moltiplicato per la funzione limitata $\sin\frac{1}{x}$, restituisce:
+        \[
+            \lim_{x \to 0^+} x^{\alpha - 1} \sin\frac{1}{x} = 0 \implies f'(0) = 0.
+        \]
+        In questo intervallo di parametri ($1 < \alpha \le 2$), \textbf{la funzione $f$ è derivabile ovunque (con $f'(0) = 0$), ma la sua derivata prima $f'$ NON è continua in $0$}, poiché $\nexists \lim_{x \to 0^+} f'(x)$! Pertanto $f$ è derivabile su tutto il dominio ma $f \notin C^1$.
+        \item Se \textbf{$\alpha = 1$}, il rapporto incrementale è $\sin\frac{1}{x}$, il cui limite per $x \to 0^+$ non esiste ($f$ non è derivabile in $0$).
+        \item Se \textbf{$0 < \alpha < 1$}, il rapporto incrementale è $x^{\alpha - 1} \sin\frac{1}{x}$ con $\alpha - 1 < 0$, che oscilla illimitatamente ($f$ non è derivabile in $0$).
+    \end{itemize}
+\end{enumerate}
+
+\noindent\textbf{Sintesi dei risultati al variare di $\alpha > 0$:}
+\begin{itemize}
+    \item $0 < \alpha \le 1$: $f$ è continua in $0$ ($f \in C^0$), ma \textbf{non derivabile} in $0$.
+    \item $1 < \alpha \le 2$: $f$ è \textbf{derivabile} anche in $0$ con $f'(0) = 0$, ma $f'$ è \textbf{discontinua} in $0$ ($f \notin C^1$).
+    \item $\alpha > 2$: $f$ è derivabile con \textbf{derivata continua} anche in $0$, ossia \textbf{$f \in C^1$}.
+\end{itemize}
+\end{esbox}
