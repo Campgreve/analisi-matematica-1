@@ -2,7 +2,7 @@
 
 Raccolta di appunti di **Analisi Matematica I** per Ingegneria (A.A. 2026/2027), redatta in LaTeX con tema dark, dimostrazioni svolte passo-passo, grafici `pgfplots` ed esercizi risolti.
 
-**[Apri o scarica il PDF completo (`Analisi_Matematica_I.pdf`)](./Analisi_Matematica_I.pdf)**
+**[Apri o scarica il PDF completo (`Analisi_Matematica_I.pdf`)](./Analisi%20I.pdf)**
 
 ---
 
